@@ -36,19 +36,20 @@
 <!-- Hero Section -->
 <section class="section bg-hero d-flex align-items-center justify-content-center" style="min-height: 400px;">
   <div class="container">
-    <!-- Large & Medium: Logo left, Text right -->
-    <div class="row align-items-center justify-content-center d-none d-md-flex" style="min-height: 320px;">
-      <div class="col-auto pe-4">
+    <!-- Large & Medium: Text centered on page, logo to its left, invisible spacer on right -->
+    <div class="d-none d-lg-flex align-items-center justify-content-center" style="min-height: 320px;">
+      <div style="width: 200px; flex-shrink: 0; display: flex; justify-content: flex-end; margin-right: 20px;">
         <img src="images/logo.png" alt="CAMEL-ECG Logo" style="width: 180px; height: 180px; border-radius:50%; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
       </div>
-      <div class="col-auto ps-3">
+      <div class="text-center">
         <h1 class="fw-bold mb-2 text-white pulse-title" style="letter-spacing: 2px;">CAMEL-ECG</h1>
         <p class="mb-0 text-white-50 pulse-subtitle">Predictive AI for Cardiac Monitoring</p>
       </div>
+      <div style="width: 200px; flex-shrink: 0; margin-left: 20px;" aria-hidden="true"></div>
     </div>
     
     <!-- Small: Everything stacked and centered -->
-    <div class="row justify-content-center d-md-none text-center" style="min-height: 320px;">
+    <div class="row justify-content-center d-lg-none text-center" style="min-height: 320px;">
       <div class="col-12 d-flex flex-column justify-content-center align-items-center">
         <img src="images/logo.png" alt="CAMEL-ECG Logo" style="width: 150px; height: 150px; border-radius:50%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin-bottom: 20px;">
         <h1 class="fw-bold mb-2 text-white pulse-title" style="letter-spacing: 2px;">CAMEL-ECG</h1>
