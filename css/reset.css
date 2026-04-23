@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Intentional reset. Not normalize — just what we actually need.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd, ul, ol {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: var(--lh-body);
+  overflow-x: clip;
+}
+
+html { overflow-x: clip; }
+
+img, picture, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+svg { fill: currentColor; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul, ol { padding-inline-start: 0; list-style: none; }
+
+a { color: inherit; text-decoration: none; }
+
+table { border-collapse: collapse; width: 100%; }
+
+hr {
+  border: 0;
+  border-top: var(--rule) solid var(--platinum);
+  margin-block: var(--space-5);
+}
+
+/* remove default iOS tap highlight; we handle it ourselves */
+a, button { -webkit-tap-highlight-color: transparent; }
+
+/* accessible skip link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-3);
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--bone);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--ff-mono, monospace);
+  font-size: var(--fs-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.skip-link:focus { top: var(--space-3); }
+
+::selection { background: var(--strip); color: var(--ink); }
+::-moz-selection { background: var(--strip); color: var(--ink); }

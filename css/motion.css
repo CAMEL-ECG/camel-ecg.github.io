@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Motion — reveal utilities, keyframes, reduced-motion fallbacks.
+   One IntersectionObserver in motion.js toggles `.in-view`.
+   ========================================================================== */
+
+/* -- Generic reveal (fade + rise) ------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-base) var(--ease-ink),
+              transform var(--dur-base) var(--ease-ink);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.in-view.reveal,
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* Stagger children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-base) var(--ease-ink),
+              transform var(--dur-base) var(--ease-ink);
+}
+.in-view > *:nth-child(1) { transition-delay:   0ms; }
+.in-view > *:nth-child(2) { transition-delay:  80ms; }
+.in-view > *:nth-child(3) { transition-delay: 160ms; }
+.in-view > *:nth-child(4) { transition-delay: 240ms; }
+.in-view > *:nth-child(5) { transition-delay: 320ms; }
+.in-view > *:nth-child(6) { transition-delay: 400ms; }
+
+.in-view.reveal-stagger > * { opacity: 1; transform: translateY(0); }
+
+/* -- Ink-wipe reveal (title line-by-line) ----------------------------- */
+.wipe {
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--dur-slow) var(--ease-ink);
+  transition-delay: var(--wipe-delay, 80ms);
+}
+.in-view .wipe { clip-path: inset(0 0 0 0); }
+.wipe.wipe--page-load {
+  animation: wipe-in var(--dur-slow) var(--ease-ink) 240ms forwards;
+  clip-path: inset(0 100% 0 0);
+}
+
+@keyframes wipe-in {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* -- Eyebrow / paragraph first-load sequence (hero) ------------------ */
+.hero__cluster .eyebrow   { opacity: 0; animation: fade-up var(--dur-base) var(--ease-ink) 120ms forwards; }
+.hero__cluster .ruler-mark{ transform: scaleX(0); transform-origin: left; animation: ruler-grow var(--dur-base) var(--ease-ink) 300ms forwards; }
+.hero__cluster .display   { clip-path: inset(0 100% 0 0); animation: wipe-in var(--dur-slow) var(--ease-ink) 240ms forwards; }
+.hero__cluster .lede      { opacity: 0; transform: translateY(8px); animation: fade-up var(--dur-base) var(--ease-ink) 800ms forwards; }
+.hero__cluster .actions   { opacity: 0; transform: translateY(4px); animation: fade-up var(--dur-base) var(--ease-ink) 1000ms forwards; }
+
+@keyframes ruler-grow { to { transform: scaleX(1); } }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+
+/* -- Graph paper fade in ---------------------------------------------- */
+.hero .surface-grid::before {
+  opacity: 0;
+  animation: grid-fade 420ms var(--ease-ink) 500ms forwards;
+}
+@keyframes grid-fade { to { opacity: 0.35; } }
+
+/* -- ECG divider ------------------------------------------------------ */
+.divider-ecg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  transition: stroke-dashoffset 400ms var(--ease-ink);
+}
+.in-view .divider-ecg path { stroke-dashoffset: 0; }
+
+/* -- Curriculum horizontal rule draw --------------------------------- */
+.curriculum__rule {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1200ms var(--ease-ink);
+}
+.in-view .curriculum__rule { transform: scaleX(1); }
+
+/* -- Stat counter (JS toggles final text; CSS handles initial opacity) */
+.stat__value { opacity: 0; transform: translateY(4px); transition: opacity var(--dur-base) var(--ease-ink), transform var(--dur-base) var(--ease-ink); }
+.in-view .stat__value { opacity: 1; transform: translateY(0); }
+
+/* -- Reduced motion — everything becomes instant -------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 200ms !important;
+    transition-delay: 0ms !important;
+  }
+  .wipe, .hero__cluster .wipe, .hero__cluster .display { clip-path: inset(0 0 0 0) !important; }
+  .hero__cluster .eyebrow,
+  .hero__cluster .display,
+  .hero__cluster .lede,
+  .hero__cluster .actions { opacity: 1 !important; transform: none !important; }
+  .hero__cluster .ruler-mark { transform: scaleX(1) !important; }
+  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
+  .hero-visual__trace path.trace--drawn { stroke-dashoffset: 0 !important; }
+  .curriculum__rule { transform: scaleX(1) !important; }
+  .divider-ecg path { stroke-dashoffset: 0 !important; }
+  .stat__value { opacity: 1 !important; transform: none !important; }
+}

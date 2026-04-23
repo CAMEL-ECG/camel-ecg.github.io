@@ -1,0 +1,113 @@
+/* ==========================================================================
+   CAMEL-ECG · Design Tokens — "Strip" palette
+   Single source of truth for color, space, type, motion, radii, shadows.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Color · Strip palette ------------------------------------------ */
+  --bone:             #F5EFE6;   /* page, paper  (≥ 90% of surfaces)      */
+  --bone-deep:        #EEE6DA;   /* subtle tonal shift on alt sections    */
+  --ink:              #12110F;   /* text, waveform; print-grade near-black */
+  --graphite:         #52514D;   /* secondary text, captions, metadata     */
+  --platinum:         #D6CEC3;   /* borders, hairlines, muted surfaces     */
+  --platinum-deep:    #BBB1A3;   /* hairlines on darker tonal shifts       */
+  --arterial:         #8C1F2D;   /* single sharp accent · primary CTA      */
+  --arterial-deep:    #5A0F1A;   /* focus rings, pressed state             */
+  --strip:            #EDD8D0;   /* faded rose ECG-paper grid · decorative */
+
+  /* ---- Spacing scale (4 · 8 · 16 · 24 · 40 · 64 · 96 · 120 · 160) ----- */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:  16px;
+  --space-4:  24px;
+  --space-5:  40px;
+  --space-6:  64px;
+  --space-7:  96px;
+  --space-8: 120px;
+  --space-9: 160px;
+
+  /* ---- Radii ---------------------------------------------------------- */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+
+  /* ---- Borders (1 px is 1 px) ----------------------------------------- */
+  --rule: 1px;
+
+  /* ---- Shadows (used sparingly) --------------------------------------- */
+  --shadow-card:    0 2px 12px rgba(18, 17, 15, 0.06);
+  --shadow-hover:   0 6px 24px rgba(18, 17, 15, 0.08);
+
+  /* ---- Type scale (desktop) ------------------------------------------- */
+  --fs-caption: 13px;
+  --fs-eyebrow: 12px;
+  --fs-body:    17px;
+  --fs-lede:    20px;
+  --fs-h4:      20px;
+  --fs-h3:      26px;
+  --fs-h2:      36px;
+  --fs-h1:      56px;
+  --fs-display: 96px;
+
+  /* line heights snap to 8 px baseline */
+  --lh-tight:   1.08;
+  --lh-title:   1.16;
+  --lh-body:    1.55;
+  --lh-loose:   1.65;
+
+  /* ---- Fraunces variation axes (via font-variation-settings) --------- */
+  --frx-display:      "opsz" 144, "SOFT" 30,  "wght" 500;
+  --frx-section:      "opsz"  48, "SOFT" 50,  "wght" 500;
+  --frx-h3:           "opsz"  32, "SOFT" 50,  "wght" 500;
+  --frx-body-italic:  "opsz"  24, "SOFT" 100, "wght" 400;
+
+  /* ---- Grid & container ---------------------------------------------- */
+  --container-max: 1280px;
+  --gutter:         24px;
+  --pad-desk:       40px;
+  --pad-tab:        32px;
+  --pad-mob:        24px;
+
+  /* ---- Motion · duration ---------------------------------------------- */
+  --dur-instant:  120ms;
+  --dur-quick:    240ms;
+  --dur-base:     420ms;
+  --dur-slow:     720ms;
+  --dur-trace:   1600ms;
+  --dur-pulse:    880ms;  /* 68 bpm */
+
+  /* ---- Motion · easing ------------------------------------------------ */
+  --ease-instrument: cubic-bezier(0.2, 0.6, 0, 1);
+  --ease-ink:        cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-exit:       cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---- Focus ring ----------------------------------------------------- */
+  --focus-ring: 2px solid var(--arterial);
+  --focus-offset: 2px;
+}
+
+/* ------------------------- Responsive type scale ----------------------- */
+@media (max-width: 1023px) {
+  :root {
+    --fs-display: 72px;
+    --fs-h1:      44px;
+    --fs-h2:      32px;
+    --fs-h3:      24px;
+    --fs-body:    16px;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --fs-display: 48px;
+    --fs-h1:      34px;
+    --fs-h2:      26px;
+    --fs-h3:      22px;
+    --fs-h4:      18px;
+    --fs-body:    16px;
+    --fs-lede:    18px;
+  }
+}

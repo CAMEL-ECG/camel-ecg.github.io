@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Waitlist · CAMEL</title>
+  <meta name="description" content="Be the first to access new CAMEL releases — early checkpoints, release notes, and partnership opportunities for health systems and researchers.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+
+  <link rel="preload" href="/assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-400.woff2"    as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-500.woff2"    as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/typography.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
+  <link rel="stylesheet" href="/css/print.css" media="print">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="navbar" aria-label="Site">
+  <div class="container navbar__inner">
+    <a class="navbar__brand" href="/" aria-label="CAMEL home">
+      <svg class="mark" viewBox="0 0 56 22" aria-hidden="true">
+        <path class="pulse" d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54"
+          stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="wordmark">CAMEL</span>
+    </a>
+
+    <button class="navbar__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav class="navbar__links" id="nav-links" aria-label="Primary">
+      <a class="nav-link" href="/">Model</a>
+      <a class="nav-link" href="/technology/">Technology</a>
+      <a class="nav-link" href="/team/">Team</a>
+      <a class="nav-link" href="/demo/">Demo</a>
+      <span class="navbar__cta"><a class="btn-cta" href="/waitlist/" aria-current="page">Join Waitlist</a></span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== PAGE HEADER + SIGNUP ==================== -->
+  <section class="section page-header surface-grid">
+    <div class="container">
+      <div class="grid" style="align-items: start;">
+        <div class="col-1-6 heading-cluster">
+          <p class="eyebrow">Waitlist</p>
+          <span class="ruler-mark" aria-hidden="true"></span>
+          <h1 class="display" style="font-size: clamp(36px, 6vw, 72px);">Be the first to access <em>new</em> CAMEL releases.</h1>
+          <p class="lede" style="max-width: 50ch;">Waitlist members get early checkpoints, release notes, and first look at partnership opportunities with Penn Engineering and Penn Medicine.</p>
+        </div>
+
+        <div class="col-7-12">
+          <div class="signup reveal">
+
+            <!-- ==================== FORM VIEW ==================== -->
+            <div class="signup__form-view" data-signup-form-view>
+              <p class="eyebrow signup__eyebrow">Sign up</p>
+              <h2 class="signup__heading">Join the waitlist</h2>
+
+              <!--
+                MailerLite embedded form (account 2287503, form 185513123710502322).
+                Fields mapped:
+                  fields[email]   → email
+                  fields[name]    → name
+                  fields[company] → role (re-purposed to store role on the MailerLite side)
+                Submission is intercepted by /js/waitlist.js and posted via fetch (no-cors).
+                Without JS, the form does a normal POST which opens MailerLite's
+                thank-you page in a new tab (target="_blank").
+              -->
+              <form id="wl-form"
+                    class="wl-form"
+                    action="https://assets.mailerlite.com/jsonp/2287503/forms/185513123710502322/subscribe"
+                    method="POST"
+                    target="_blank">
+                <div class="field">
+                  <label for="wl-email">Email</label>
+                  <input id="wl-email" name="fields[email]" type="email" required
+                         autocomplete="email" placeholder="you@hospital.edu">
+                </div>
+                <div class="field">
+                  <label for="wl-name">Name <span class="field__hint">· optional</span></label>
+                  <input id="wl-name" name="fields[name]" type="text"
+                         autocomplete="name" placeholder="Dr. First Last">
+                </div>
+                <div class="field">
+                  <label for="wl-role">Role <span class="field__hint">· optional</span></label>
+                  <select id="wl-role" name="fields[company]">
+                    <option value="">Select…</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Clinician">Clinician</option>
+                    <option value="Industry">Industry</option>
+                    <option value="Researcher">Researcher</option>
+                    <option value="Student">Student</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <!-- Honeypot: bots autofill, humans never see it. -->
+                <div class="wl-hp" aria-hidden="true">
+                  <label for="wl-hp-field">If you are human, leave this empty.</label>
+                  <input id="wl-hp-field" name="wl_address_2" type="text" tabindex="-1" autocomplete="off">
+                </div>
+
+                <!-- MailerLite-required hidden fields -->
+                <input type="hidden" name="ml-submit" value="1">
+                <input type="hidden" name="anticsrf" value="true">
+
+                <button class="btn btn-primary wl-submit" type="submit">
+                  <span class="wl-submit__label">Join the Waitlist</span>
+                  <span class="wl-submit__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                </button>
+
+                <p class="wl-form__status" role="status" aria-live="polite" hidden></p>
+
+                <p class="wl-fineprint">At most one email a month. We never share your address.</p>
+              </form>
+            </div>
+
+            <!-- ==================== SUCCESS VIEW ==================== -->
+            <div class="signup__success-view" data-signup-success-view hidden aria-live="polite" aria-atomic="true">
+              <svg class="signup__success-mark" viewBox="0 0 120 40" aria-hidden="true">
+                <path class="signup__success-line"
+                      d="M2 20 H26 L30 20 L34 8 L38 32 L42 6 L46 34 L50 12 L54 20 L72 20 L78 26 L86 14 L118 4"
+                      pathLength="1"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      vector-effect="non-scaling-stroke"/>
+                <circle class="signup__success-dot" cx="118" cy="4" r="3" fill="currentColor"/>
+              </svg>
+              <p class="eyebrow signup__eyebrow signup__eyebrow--ok">Subscribed</p>
+              <h2 class="signup__heading">Welcome aboard.</h2>
+              <p class="signup__success-body">We added <b data-signup-email>your email</b> to the CAMEL waitlist. The next time we ship a new checkpoint, a new benchmark, or a partnership opportunity, you'll hear from us.</p>
+              <p class="wl-fineprint">You can unsubscribe from any email we send.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHAT YOU'LL GET + FAQ ==================== -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="grid">
+
+        <div class="col-1-8">
+          <p class="eyebrow">FAQ</p>
+          <h2 id="faq-title" class="section-title mt-3 mb-5">Straight answers.</h2>
+
+          <div class="faq">
+            <details>
+              <summary>Is CAMEL available for clinical use?</summary>
+              <p class="answer">No. CAMEL is a research model and is not cleared for clinical decision-making. We are actively designing deployment studies with clinical partners — that work is on the waitlist roadmap.</p>
+            </details>
+            <details>
+              <summary>Can I self-host the model?</summary>
+              <p class="answer">Yes. Weights and inference code are public. See the <a class="link-plain" href="/demo/">Demo page</a> for a ten-line snippet on GitHub and Hugging Face.</p>
+            </details>
+            <details>
+              <summary>How often will you email me?</summary>
+              <p class="answer">At most once a month, typically less. We email when we ship a new checkpoint, a new benchmark result, or an opportunity to collaborate.</p>
+            </details>
+            <details>
+              <summary>How is my data handled?</summary>
+              <p class="answer">We only store the email address you provide and, if you give it, your role. We don't set cookies on this site, we don't run analytics, and we don't share your email with third parties.</p>
+            </details>
+            <details>
+              <summary>I'm part of a health system — can we partner?</summary>
+              <p class="answer">Yes — that's a major reason the waitlist exists. Mention it in the role dropdown and we'll reach out directly.</p>
+            </details>
+          </div>
+        </div>
+
+        <aside class="col-9-12" style="align-self: start;">
+          <p class="eyebrow">What you'll get</p>
+          <div class="stack-4 mt-4">
+            <article class="card">
+              <h3 class="card__title">Early access</h3>
+              <p class="card__body">Try new CAMEL checkpoints before they land on Hugging Face.</p>
+            </article>
+            <article class="card">
+              <h3 class="card__title">Release notes</h3>
+              <p class="card__body">Occasional emails on benchmarks, new capabilities, datasets — no marketing fluff.</p>
+            </article>
+            <article class="card">
+              <h3 class="card__title">Partnership</h3>
+              <p class="card__body">First-look opportunities for health systems and research groups interested in collaborating.</p>
+            </article>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="footer__wordmark">
+          <svg class="mark" viewBox="0 0 56 22" aria-hidden="true" style="width:28px; height:22px;">
+            <path d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          CAMEL
+        </div>
+        <p class="footer__tag">An ECG language model that forecasts cardiac events before they happen.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Site</h5>
+        <ul>
+          <li><a href="/">Model</a></li>
+          <li><a href="/technology/">Technology</a></li>
+          <li><a href="/team/">Team</a></li>
+          <li><a href="/demo/">Demo</a></li>
+          <li><a href="/waitlist/">Waitlist</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="https://arxiv.org/abs/2602.15677">Paper · arXiv</a></li>
+          <li><a href="https://github.com/CAMEL-ECG/CAMEL-inference">GitHub · CAMEL-inference</a></li>
+          <li><a href="https://huggingface.co/CAMEL-ECG">Hugging Face · CAMEL-ECG</a></li>
+          <li><a href="/Generative%20AI%20for%20Cardiac%20Arrest%20Prediction.pdf">Project brief · PDF</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Supported by</h5>
+        <ul>
+          <li>ARPA-H · D24AC00253-00</li>
+          <li>NIH · R01-EB036016</li>
+          <li>Google TPU Builders Program</li>
+          <li>AWS AI · ASSET</li>
+          <li>PARCC · Penn Advanced Research Computing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 University of Pennsylvania</span>
+      <span>Penn Engineering × Penn Medicine</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/js/motion.js"></script>
+<script defer src="/js/waitlist.js"></script>
+</body>
+</html>

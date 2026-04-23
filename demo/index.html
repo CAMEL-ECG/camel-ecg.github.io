@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo · CAMEL</title>
+  <meta name="description" content="See CAMEL on a real ECG — a staged walkthrough of the model reading a rhythm and forecasting an event.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+
+  <link rel="preload" href="/assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-400.woff2"    as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-500.woff2"    as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-mono-400.woff2"    as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/typography.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
+  <link rel="stylesheet" href="/css/print.css" media="print">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="navbar" aria-label="Site">
+  <div class="container navbar__inner">
+    <a class="navbar__brand" href="/" aria-label="CAMEL home">
+      <svg class="mark" viewBox="0 0 56 22" aria-hidden="true">
+        <path class="pulse" d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54"
+          stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="wordmark">CAMEL</span>
+    </a>
+
+    <button class="navbar__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav class="navbar__links" id="nav-links" aria-label="Primary">
+      <a class="nav-link" href="/">Model</a>
+      <a class="nav-link" href="/technology/">Technology</a>
+      <a class="nav-link" href="/team/">Team</a>
+      <a class="nav-link" href="/demo/" aria-current="page">Demo</a>
+      <span class="navbar__cta"><a class="btn-cta" href="/waitlist/">Join Waitlist</a></span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== PAGE HEADER ==================== -->
+  <section class="section page-header">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-8 heading-cluster">
+          <p class="eyebrow">Demo</p>
+          <span class="ruler-mark" aria-hidden="true"></span>
+          <h1 class="display" style="font-size: clamp(40px, 7vw, 88px);">See CAMEL <em>on</em> a real ECG.</h1>
+          <p class="lede" style="max-width: 58ch;">A staged walkthrough of CAMEL reading a rhythm, citing beat-level statistics, and issuing a forecast. Not for clinical use — a live interactive demo is linked below.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SAMPLE INTERACTION ==================== -->
+  <section class="section surface-grid" aria-labelledby="scene-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-5 heading-cluster reveal">
+          <p class="eyebrow">Sample interaction</p>
+          <h2 id="scene-title" class="section-title">An ECG, <em>a prompt,</em> a response.</h2>
+          <p class="lede">Switch between three pre-rendered scenarios. All three are authored ahead of time — no model call is made in the browser.</p>
+        </div>
+
+        <div class="col-6-12 reveal">
+          <div class="demo-tabs" role="tablist" data-tabs="scene">
+            <button class="demo-tab" role="tab" aria-selected="true"  data-panel="nsr">Normal sinus rhythm</button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-panel="afib">Ectopy → AFib · 3 min</button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-panel="report">12-lead · report</button>
+          </div>
+
+          <div data-panel-group="scene">
+
+            <!-- Panel 1: NSR -->
+            <figure class="demo-scene demo-panel" data-panel="nsr">
+              <svg viewBox="0 0 800 120" preserveAspectRatio="none" style="width:100%; height:120px; color: var(--ink);" aria-hidden="true">
+                <path d="M0 70 L40 70 L48 66 L54 62 L60 66 L66 70 L110 70 L116 76 L122 30 L128 80 L134 70 L170 70 L188 60 L206 54 L224 60 L240 70 L290 70
+                         L320 70 L326 76 L332 30 L338 80 L344 70 L380 70 L398 60 L416 54 L434 60 L450 70 L500 70
+                         L530 70 L536 76 L542 30 L548 80 L554 70 L590 70 L608 60 L626 54 L644 60 L660 70 L710 70
+                         L740 70 L760 64 L778 70 L800 70" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="example__prompt">Prompt · <span class="mono">&lt;ecg&gt; lead II · 30 s · forecast horizon 3 min</span></p>
+              <p class="example__response">
+                "Regular RR at about <span class="stat-inline">RR 870 ms</span>, PR and QRS within normal limits
+                (<span class="stat-inline">PR 156 ms</span>, <span class="stat-inline">QRS 92 ms</span>).
+                No premature beats in 30 s. <span class="stat-inline">RMSSD 28 ms</span>. Rhythm is sinus."
+              </p>
+              <p class="example__forecast">Forecast · NORMAL — no arrhythmia expected within 3 min</p>
+              <figcaption><em>Scenario 1</em> — Normal sinus rhythm.</figcaption>
+            </figure>
+
+            <!-- Panel 2: AFib forecast (inspired by paper Fig. 1) -->
+            <figure class="demo-scene demo-panel" data-panel="afib" hidden>
+              <svg viewBox="0 0 800 120" preserveAspectRatio="none" style="width:100%; height:120px; color: var(--ink);" aria-hidden="true">
+                <path d="M0 70 L30 70 L38 66 L44 60 L50 66 L56 70 L92 70 L100 78 L106 22 L112 86 L118 70 L148 70 L166 56 L184 48 L202 56 L220 70 L252 70
+                         L262 76 L268 26 L274 82 L280 70 L300 70 L318 58 L336 50 L354 58 L370 70 L408 70
+                         L414 78 L420 20 L426 86 L432 70 L460 70 L478 56 L496 48 L514 56 L532 70 L560 70
+                         L570 74 L576 28 L582 82 L588 70 L614 70 L630 58 L648 50 L666 58 L684 70 L712 70
+                         L722 74 L728 22 L734 86 L740 70 L770 70 L790 66 L800 70" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="example__prompt">Prompt · <span class="mono">&lt;ecg&gt; lead II · 30 s · forecast horizon 3 min</span></p>
+              <p class="example__response">
+                "Multiple premature atrial contractions (<span class="stat-inline">PAC 11 / 30 s</span>) with
+                markedly irregular RR (<span class="stat-inline">RR CV 0.28</span>,
+                <span class="stat-inline">RMSSD 194 ms</span>). PR preserved
+                (<span class="stat-inline">PR 168 ms</span>). The pattern — frequent PACs with increasing burden
+                and high short-term HRV — is consistent with imminent atrial fibrillation."
+              </p>
+              <p class="example__forecast">Forecast · ABNORMAL — AFib likely within 3 min</p>
+              <figcaption><em>Scenario 2</em> — Ectopy-heavy rhythm with an AFib forecast (Fig. 1 of the paper).</figcaption>
+            </figure>
+
+            <!-- Panel 3: 12-lead report -->
+            <figure class="demo-scene demo-panel" data-panel="report" hidden>
+              <svg viewBox="0 0 800 120" preserveAspectRatio="none" style="width:100%; height:120px; color: var(--ink);" aria-hidden="true">
+                <g stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M0 32 L30 32 L36 28 L42 24 L48 28 L54 32 L90 32 L96 36 L102 10 L108 38 L114 32 L150 32 L168 24 L186 18 L204 24 L220 32 L280 32 L286 36 L292 10 L298 38 L304 32 L340 32 L360 24 L380 22 L400 24 L800 32"/>
+                  <path d="M0 60 L30 60 L36 56 L42 52 L48 56 L54 60 L90 60 L96 64 L102 38 L108 66 L114 60 L150 60 L168 52 L186 48 L204 52 L220 60 L800 60"/>
+                  <path d="M0 90 L30 90 L36 86 L42 82 L48 86 L54 90 L90 90 L96 94 L102 68 L108 96 L114 90 L150 90 L168 82 L186 78 L204 82 L220 90 L800 90"/>
+                </g>
+              </svg>
+              <p class="example__prompt">Prompt · <span class="mono">&lt;ecg&gt; 12 leads · 10 s</span> · "Interpret and generate a report."</p>
+              <p class="example__response">
+                "Sinus rhythm at 68 bpm. Normal axis. No ischemic ST changes. T-wave inversion in V1 is physiologic.
+                Overall: within normal limits, consistent with prior tracing from this patient."
+              </p>
+              <p class="example__forecast">Forecast · NORMAL — 12-lead interpretation only</p>
+              <figcaption><em>Scenario 3</em> — Condensed 12-lead interpretation and report generation.</figcaption>
+            </figure>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RUN IT YOURSELF ==================== -->
+  <section class="section" aria-labelledby="run-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-7 heading-cluster reveal">
+          <p class="eyebrow">Run it yourself</p>
+          <h2 id="run-title" class="section-title">Ten lines, two registries.</h2>
+          <p class="lede">Inference code lives on GitHub, weights on Hugging Face. Both are public and self-hostable.</p>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top: var(--space-6);">
+        <div class="col-1-6 reveal">
+          <article class="codecard">
+            <h3>GitHub · <span class="mono" style="font-size: 0.75em;">CAMEL-ECG/CAMEL-inference</span></h3>
+            <p class="prose" style="font-size: 15px;">Minimal inference with a single ECG file (NumPy or WFDB).</p>
+<pre id="snippet-gh">git clone https://github.com/CAMEL-ECG/CAMEL-inference
+cd CAMEL-inference
+pip install -e .
+
+from camel_ecg import CAMELForecaster
+import numpy as np
+
+ecg = np.load("ecg.npy")                     # shape (12, T)
+model = CAMELForecaster.from_pretrained("CAMEL-ECG/camel-forecast")
+out = model.forecast(ecg, horizon_min=3)
+print(out.label, out.citations)</pre>
+            <button class="codecard__copy" type="button" data-copy-target="#snippet-gh">Copy snippet</button>
+          </article>
+        </div>
+
+        <div class="col-7-12 reveal">
+          <article class="codecard">
+            <h3>Hugging Face · <span class="mono" style="font-size: 0.75em;">CAMEL-ECG</span></h3>
+            <p class="prose" style="font-size: 15px;">Load weights directly with <code>from_pretrained</code>.</p>
+<pre id="snippet-hf">from transformers import AutoProcessor, AutoModelForCausalLM
+import torch, numpy as np
+
+proc  = AutoProcessor.from_pretrained("CAMEL-ECG/camel-forecast")
+model = AutoModelForCausalLM.from_pretrained(
+    "CAMEL-ECG/camel-forecast", torch_dtype=torch.bfloat16, device_map="auto")
+
+inputs = proc(ecg=np.load("ecg.npy"),
+              text="Forecast the next 3 minutes.",
+              return_tensors="pt").to(model.device)
+print(proc.decode(model.generate(**inputs, max_new_tokens=256)[0]))</pre>
+            <button class="codecard__copy" type="button" data-copy-target="#snippet-hf">Copy snippet</button>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LIVE DEMO SLOT ==================== -->
+  <section class="section surface-deep" aria-labelledby="live-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-2-11 reveal">
+          <div class="live-slot">
+            <p class="eyebrow">Live interactive demo</p>
+            <h2 id="live-title" class="section-title" style="font-size: clamp(28px, 3.5vw, 40px); text-align:center; margin-inline: auto;">Coming soon.</h2>
+            <svg class="loader-strip" viewBox="0 0 800 80" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 40 L80 40 L92 34 L100 28 L108 34 L116 40 L180 40 L190 50 L196 6 L204 60 L212 40 L280 40 L300 26 L320 16 L340 26 L360 40 L460 40 L472 50 L480 6 L488 60 L496 40 L560 40 L580 28 L600 18 L620 28 L640 40 L720 40 L740 34 L760 28 L780 34 L800 40"/>
+            </svg>
+            <p class="prose" style="max-width: 56ch; margin-inline: auto;">We're wiring up an embedded Hugging Face Space. Until then, the full model is runnable locally from the snippets above.</p>
+            <div class="actions mt-4" style="display:flex; gap: var(--space-3); justify-content:center; flex-wrap: wrap;">
+              <a class="btn btn-primary" href="/waitlist/">Join the Waitlist</a>
+              <a class="btn btn-ghost"   href="https://huggingface.co/CAMEL-ECG">Open on Hugging Face</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DISCLAIMER ==================== -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="grid">
+        <div class="col-2-11">
+          <div class="disclaimer" role="note">
+            CAMEL is a research model. It is not a medical device, it is not FDA-cleared, and it must not be used for clinical decision-making.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="footer__wordmark">
+          <svg class="mark" viewBox="0 0 56 22" aria-hidden="true" style="width:28px; height:22px;">
+            <path d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          CAMEL
+        </div>
+        <p class="footer__tag">An ECG language model that forecasts cardiac events before they happen.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Site</h5>
+        <ul>
+          <li><a href="/">Model</a></li>
+          <li><a href="/technology/">Technology</a></li>
+          <li><a href="/team/">Team</a></li>
+          <li><a href="/demo/">Demo</a></li>
+          <li><a href="/waitlist/">Waitlist</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="https://arxiv.org/abs/2602.15677">Paper · arXiv</a></li>
+          <li><a href="https://github.com/CAMEL-ECG/CAMEL-inference">GitHub · CAMEL-inference</a></li>
+          <li><a href="https://huggingface.co/CAMEL-ECG">Hugging Face · CAMEL-ECG</a></li>
+          <li><a href="/Generative%20AI%20for%20Cardiac%20Arrest%20Prediction.pdf">Project brief · PDF</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Supported by</h5>
+        <ul>
+          <li>ARPA-H · D24AC00253-00</li>
+          <li>NIH · R01-EB036016</li>
+          <li>Google TPU Builders Program</li>
+          <li>AWS AI · ASSET</li>
+          <li>PARCC · Penn Advanced Research Computing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 University of Pennsylvania</span>
+      <span>Penn Engineering × Penn Medicine</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/js/motion.js"></script>
+</body>
+</html>

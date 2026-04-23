@@ -1,0 +1,25 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Agent / workspace metadata (local only, never deploy)
+.agents/
+
+# Local scratchpads and internal drafts
+plan.md
+_probe*.html
+_res_preview.html
+_paper_preview.html
+_fc_preview.html
+_wl_probe.html
+
+# Papers kept locally for reference but not deployed
+2602.15677v3.pdf
+
+# Node / build tools (if ever added)
+node_modules/
+dist/
+build/

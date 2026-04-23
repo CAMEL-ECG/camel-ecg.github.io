@@ -1,435 +1,353 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CAMEL-ECG: Predictive AI for Cardiac Monitoring</title>
-  <link rel="icon" type="image/png" href="images/logo.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <title>CAMEL · An ECG language model that forecasts cardiac events</title>
+  <meta name="description" content="CAMEL is the first ECG language model that forecasts cardiac events before they happen — built at Penn Engineering and Penn Medicine.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+
+  <link rel="preload" href="/assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-400.woff2"   as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-500.woff2"   as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/typography.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
+  <link rel="stylesheet" href="/css/print.css" media="print">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CAMEL — ECG language model that forecasts cardiac events">
+  <meta property="og:description" content="The first ECG language model that reasons over long-horizon signals to predict future arrhythmias with clinically grounded explanations.">
+  <meta property="og:url" content="https://camel-ecg.github.io/">
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-navbar fixed-top">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="images/logo.png" alt="CAMEL-ECG Logo" width="45" height="40" class="me-2" style="border-radius:50%;">
-      <span>CAMEL-ECG</span>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="navbar" aria-label="Site">
+  <div class="container navbar__inner">
+    <a class="navbar__brand" href="/" aria-label="CAMEL home">
+      <svg class="mark" viewBox="0 0 56 22" aria-hidden="true">
+        <path class="pulse" d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54"
+          stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="wordmark">CAMEL</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
+
+    <button class="navbar__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="bar" aria-hidden="true"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#problem">The Problem</a></li>
-        <li class="nav-item"><a class="nav-link" href="#vision">Our Vision</a></li>
-        <li class="nav-item"><a class="nav-link" href="#existing-ai">Existing AI Solutions</a></li>
-        <li class="nav-item"><a class="nav-link" href="#technology">Our Technology</a></li>
-        <li class="nav-item"><a class="nav-link" href="#team">The Team</a></li>
-        <li class="nav-item"><a class="nav-link" href="#acknowledgments">Acknowledgments</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<!-- Hero Section -->
-<section class="section bg-hero d-flex align-items-center justify-content-center" style="min-height: 400px;">
+    <nav class="navbar__links" id="nav-links" aria-label="Primary">
+      <a class="nav-link" href="/"              aria-current="page">Model</a>
+      <a class="nav-link" href="/technology/">Technology</a>
+      <a class="nav-link" href="/team/">Team</a>
+      <a class="nav-link" href="/demo/">Demo</a>
+      <span class="navbar__cta"><a class="btn-cta" href="/waitlist/">Join Waitlist</a></span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ====================== HERO ====================== -->
+  <section class="section section--hero surface-grid hero" aria-labelledby="hero-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-9 hero__cluster">
+          <p class="eyebrow">CAMEL · An ECG Language Model</p>
+          <span class="ruler-mark" aria-hidden="true"></span>
+
+          <h1 id="hero-title" class="display">
+            Forecast cardiac events <em>before</em> they happen.
+          </h1>
+
+          <p class="lede">
+            The first ECG language model that reasons over long-horizon signals to
+            predict future arrhythmias — with clinically grounded, beat-level explanations.
+          </p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="/demo/">Try the Demo</a>
+            <a class="btn btn-ghost"   href="https://arxiv.org/abs/2602.15677" rel="noopener">Read the Paper</a>
+            <a class="btn-text"        href="/waitlist/">Join the waitlist</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ECG trace; anchors bottom-right per §5.2 -->
+      <div class="grid" style="margin-top: var(--space-5);">
+        <div class="col-3-12 hero-visual" aria-hidden="true">
+          <svg class="hero-visual__trace" viewBox="0 0 1440 180" preserveAspectRatio="none">
+            <!-- 5 PQRST complexes drawn as one path -->
+            <path class="trace trace--drawn"
+              vector-effect="non-scaling-stroke"
+              d="M0 100
+                 L60 100 L70 94 L76 88 L82 94 L88 100 L120 100 L128 108 L134 22 L140 118 L146 100 L180 100 L200 82 L218 72 L236 82 L260 100 L300 100
+                 L360 100 L370 94 L376 88 L382 94 L388 100 L420 100 L428 108 L434 22 L440 118 L446 100 L480 100 L500 82 L518 72 L536 82 L560 100 L600 100
+                 L660 100 L670 94 L676 88 L682 94 L688 100 L720 100 L728 108 L734 22 L740 118 L746 100 L780 100 L800 82 L818 72 L836 82 L860 100 L900 100
+                 L960 100 L970 94 L976 88 L982 94 L988 100 L1020 100 L1028 108 L1034 22 L1040 118 L1046 100 L1080 100 L1100 82 L1118 72 L1136 82 L1160 100 L1200 100
+                 L1260 100 L1270 94 L1276 88 L1282 94 L1288 100 L1320 100 L1328 108 L1334 22 L1340 118 L1346 100 L1380 100 L1400 82 L1418 72 L1440 82"
+              />
+          </svg>
+          <div class="forecast-marker" aria-hidden="true">
+            <span class="forecast-marker__label">Forecast · AFib likely in 3 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== RESULTS STRIP ====================== -->
+  <section class="section surface-grid" aria-labelledby="results-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-5 heading-cluster reveal">
+          <p class="eyebrow">Benchmarks</p>
+          <h2 id="results-title" class="section-title"><span class="wipe">Measurable lift,</span> <em>across</em> <span class="wipe">the benchmarks that matter.</span></h2>
+          <p class="lede">CAMEL sets the state of the art on ECGForecastBench and ECGBench, with forecasting horizons prior ECG language models can't reach.</p>
+        </div>
+
+        <div class="col-6-12">
+          <div class="stats-row reveal-stagger">
+
+            <div class="stat" data-stat-container>
+              <div class="stat__note">ECGForecastBench</div>
+              <div class="stat__value tabular"
+                   data-stat="12.4" data-digits="1" data-prefix="+" data-suffix="%">+12.4%</div>
+              <p class="stat__label">F1 gain over fully-supervised baselines.</p>
+            </div>
+
+            <div class="stat">
+              <div class="stat__note">ECGForecastBench</div>
+              <div class="stat__value tabular"
+                   data-stat="21.1" data-digits="1" data-prefix="+" data-suffix="%">+21.1%</div>
+              <p class="stat__label">vs. zero-shot ECG language models.</p>
+            </div>
+
+            <div class="stat">
+              <div class="stat__note">ECGBench</div>
+              <div class="stat__value tabular"
+                   data-stat="7.0" data-digits="1" data-prefix="+" data-suffix="%">+7.0%</div>
+              <p class="stat__label">Absolute average gain on 12 classification tasks.</p>
+            </div>
+
+            <div class="stat">
+              <div class="stat__note">Context length</div>
+              <div class="stat__value tabular">
+                0<span class="unit">–</span>10k<span class="unit">s</span>
+              </div>
+              <p class="stat__label">Supported ECG window, versus 10 seconds for prior ELMs.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== DIVIDER ====================== -->
+  <div class="container"><div class="reveal">
+    <svg class="divider-ecg" viewBox="0 0 1440 32" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 16 H360 L372 16 L378 8 L384 22 L390 6 L396 24 L402 10 L408 16 H720 L732 16 L738 4 L744 24 L750 8 L756 20 L762 16 H1080 L1092 16 L1098 8 L1104 22 L1110 6 L1116 24 L1122 10 L1128 16 H1440"
+        stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div></div>
+
+  <!-- ====================== CAPABILITIES ====================== -->
+  <section class="section" aria-labelledby="cap-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-8-12 heading-cluster reveal" style="text-align: end;">
+          <p class="eyebrow" style="justify-content: end;">Capabilities</p>
+          <h2 id="cap-title" class="section-title" style="margin-inline-start:0;">What CAMEL is built to do.</h2>
+        </div>
+
+        <div class="col-1-12" style="margin-top: var(--space-5);">
+          <div class="cap-grid reveal-stagger">
+            <article class="card">
+              <svg class="card__motif" viewBox="0 0 48 18" aria-hidden="true">
+                <path d="M1 9 H14 L18 3 L22 15 L26 9 H47" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="card__title">Forecasting</h3>
+              <p class="card__body">Predict arrhythmias minutes before they occur, grounded in statistics computed directly from the ECG.</p>
+            </article>
+            <article class="card">
+              <svg class="card__motif" viewBox="0 0 48 18" aria-hidden="true">
+                <path d="M1 9 H8 L11 5 L14 13 L17 9 H24 L27 5 L30 13 L33 9 H47" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="card__title">Long-horizon context</h3>
+              <p class="card__body">Reason over seconds to hours of multi-lead ECG — not just 10-second snippets. Up to 10,000 seconds of signal per prompt.</p>
+            </article>
+            <article class="card">
+              <svg class="card__motif" viewBox="0 0 48 18" aria-hidden="true">
+                <path d="M1 9 H20 L23 3 L26 15 L29 9 H47 M1 13 H18 L21 7 L24 17 L27 13 H47" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="card__title">Multi-ECG comparison</h3>
+              <p class="card__body">Compare signals across time, leads, or patients in a single prompt — enabling before/after and cohort reasoning.</p>
+            </article>
+            <article class="card">
+              <svg class="card__motif" viewBox="0 0 48 18" aria-hidden="true">
+                <path d="M1 9 H14 L17 3 L20 15 L23 9 H47" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3 class="card__title">Evidence-grounded reasoning</h3>
+              <p class="card__body">Every prediction cites specific beat-level metrics — RR, PR, QRS, PAC count, RMSSD — so outputs are auditable, not opaque.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== EXAMPLE OUTPUT ====================== -->
+  <section class="section surface-grid" aria-labelledby="example-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-5 heading-cluster reveal">
+          <p class="eyebrow">Example output</p>
+          <h2 id="example-title" class="section-title">A reading that <em>cites itself.</em></h2>
+          <p class="lede">CAMEL's forecasts reference specific beat-level metrics it computes directly from the strip — so clinicians can verify what it saw.</p>
+        </div>
+
+        <div class="col-6-12 reveal">
+          <figure class="example">
+            <svg class="example__strip" viewBox="0 0 800 120" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 70 L40 70 L48 66 L54 62 L60 66 L66 70 L110 70 L118 78 L124 12 L130 86 L136 70 L170 70 L190 56 L210 48 L230 56 L250 70 L280 70
+                       L310 70 L318 78 L324 22 L330 84 L336 70 L360 70 L382 60 L396 48 L410 60 L430 70 L470 70
+                       L500 70 L512 82 L520 18 L528 90 L534 70 L580 70 L600 58 L622 46 L642 60 L670 70 L720 70
+                       L760 70 L780 64 L800 70"
+                stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="example__prompt">Prompt · <span class="mono">&lt;ecg&gt; lead II · 30 s @ 256 Hz</span> · forecast horizon 3 min</div>
+            <p class="example__response">
+              "The strip shows frequent premature atrial contractions and irregular RR intervals
+              (<span class="stat-inline">RMSSD 194 ms</span>, baseline &lt; 40 ms). PR is preserved
+              (<span class="stat-inline">PR 168 ms</span>) but 11 PACs in 30 s, combined with
+              <span class="stat-inline">RR CV 0.28</span>, is consistent with imminent AFib."
+            </p>
+            <p class="example__forecast">Forecast · ABNORMAL — AFib likely within 3 min</p>
+            <figcaption><em>Fig. 1</em> — A single-lead excerpt, CAMEL's response rendered as it would appear in the demo.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== HOW IT WORKS ====================== -->
+  <section class="section surface-deep" aria-labelledby="how-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-7 heading-cluster reveal">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title" class="section-title">Signals become language, <em>once</em> they're tokenized.</h2>
+          <p class="lede">A CNN encoder quantizes 1-second ECG segments into tokens that live in the same sequence as text. The language model does the rest.</p>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top: var(--space-6);">
+        <div class="col-1-12">
+          <div class="steps reveal-stagger">
+            <article class="step">
+              <div class="step__num" aria-hidden="true"></div>
+              <h3 class="step__title">Tokenize the signal</h3>
+              <p class="step__body">A trainable CNN encoder converts 1-second, 256 Hz, single-lead ECG segments into 64-dimensional latents.</p>
+            </article>
+            <article class="step">
+              <div class="step__num" aria-hidden="true"></div>
+              <h3 class="step__title">Interleave with text</h3>
+              <p class="step__body">Signal tokens are projected into a 2560-d space and interleaved with text tokens inside MedGemma-4B, adapted with rank-128 LoRA.</p>
+            </article>
+            <article class="step">
+              <div class="step__num" aria-hidden="true"></div>
+              <h3 class="step__title">Generate a grounded forecast</h3>
+              <p class="step__body">A lead-aware attention mask lets CAMEL reason across leads at each timestamp and produce a clinically cited forecast.</p>
+            </article>
+          </div>
+          <p class="mt-5"><a class="link-arrow" href="/technology/#architecture">See the full architecture</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CLOSING CTA ====================== -->
+  <section class="section" aria-labelledby="closing-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-4-9">
+          <div class="closing-cta reveal">
+            <svg viewBox="0 0 200 40" aria-hidden="true" style="width:160px; height:32px; color: var(--arterial); margin: 0 auto var(--space-3);">
+              <path d="M0 20 H60 L70 10 L80 30 L90 20 H120 L130 6 L140 34 L150 20 H200" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2 id="closing-title" class="display" style="font-size: clamp(34px, 4.5vw, 56px);">Try it. Or help shape what comes next.</h2>
+            <div class="actions">
+              <a class="btn btn-primary" href="/demo/">Try the Demo</a>
+              <a class="btn btn-ghost"   href="/waitlist/">Join the Waitlist</a>
+            </div>
+            <p>Clinical researchers and health systems — we'd love to hear from you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="footer" aria-label="Site footer">
   <div class="container">
-    <!-- Large & Medium: Text centered on page, logo to its left, invisible spacer on right -->
-    <div class="d-none d-lg-flex align-items-center justify-content-center" style="min-height: 320px;">
-      <div style="width: 200px; flex-shrink: 0; display: flex; justify-content: flex-end; margin-right: 20px;">
-        <img src="images/logo.png" alt="CAMEL-ECG Logo" style="width: 180px; height: 180px; border-radius:50%; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="footer__wordmark">
+          <svg class="mark" viewBox="0 0 56 22" aria-hidden="true" style="width:28px; height:22px;">
+            <path d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          CAMEL
+        </div>
+        <p class="footer__tag">An ECG language model that forecasts cardiac events before they happen.</p>
       </div>
-      <div class="text-center">
-        <h1 class="fw-bold mb-2 text-white pulse-title" style="letter-spacing: 2px;">CAMEL-ECG</h1>
-        <p class="mb-0 text-white-50 pulse-subtitle">Predictive AI for Cardiac Monitoring</p>
+      <div class="footer__col">
+        <h5>Site</h5>
+        <ul>
+          <li><a href="/">Model</a></li>
+          <li><a href="/technology/">Technology</a></li>
+          <li><a href="/team/">Team</a></li>
+          <li><a href="/demo/">Demo</a></li>
+          <li><a href="/waitlist/">Waitlist</a></li>
+        </ul>
       </div>
-      <div style="width: 200px; flex-shrink: 0; margin-left: 20px;" aria-hidden="true"></div>
+      <div class="footer__col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="https://arxiv.org/abs/2602.15677">Paper · arXiv</a></li>
+          <li><a href="https://github.com/CAMEL-ECG/CAMEL-inference">GitHub · CAMEL-inference</a></li>
+          <li><a href="https://huggingface.co/CAMEL-ECG">Hugging Face · CAMEL-ECG</a></li>
+          <li><a href="/Generative%20AI%20for%20Cardiac%20Arrest%20Prediction.pdf">Project brief · PDF</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Supported by</h5>
+        <ul>
+          <li>ARPA-H · D24AC00253-00</li>
+          <li>NIH · R01-EB036016</li>
+          <li>Google TPU Builders Program</li>
+          <li>AWS AI · ASSET</li>
+          <li>PARCC · Penn Advanced Research Computing</li>
+        </ul>
+      </div>
     </div>
-    
-    <!-- Small: Everything stacked and centered -->
-    <div class="row justify-content-center d-lg-none text-center" style="min-height: 320px;">
-      <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-        <img src="images/logo.png" alt="CAMEL-ECG Logo" style="width: 150px; height: 150px; border-radius:50%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); margin-bottom: 20px;">
-        <h1 class="fw-bold mb-2 text-white pulse-title" style="letter-spacing: 2px;">CAMEL-ECG</h1>
-        <p class="mb-0 text-white-50 pulse-subtitle">Predictive AI for Cardiac Monitoring</p>
-      </div>
-    </div>
-    
-    <div class="row justify-content-center mt-4">
-      <div class="col-auto">
-        <a href="Generative%20AI%20for%20Cardiac%20Arrest%20Prediction.pdf" class="btn btn-outline-light btn-lg">Download Project Brief</a>
-      </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 University of Pennsylvania</span>
+      <span>Penn Engineering × Penn Medicine</span>
     </div>
   </div>
-</section>
-
-<!-- Problem Section -->
-<section id="problem" class="section">
-  <div class="container">
-    <div class="h3 fw-bold mb-4 text-center">The Problem</div>
-    <p>Cardiac arrest is a leading cause of morbidity and mortality. Each year in the U.S. alone, it affects approximately 300,000 adults in hospital and 250,000 out of hospital, with an average patient age of 66 years. In-hospital cardiac arrest represents a true clinical emergency requiring immediate intervention to improve the chances of survival and intact neurologic functioning. Yet, only about 25% of patients survive to discharge.</p>
-  </div>
-</section>
-
-<!-- Vision Section -->
-<section id="vision" class="section bg-alt">
-  <div class="container">
-    <div class="h3 fw-bold mb-4 text-center">Our Vision</div>
-    <div class="row mb-4">
-      <div class="col-12">
-        <p>Retrospective studies indicate that poor clinical monitoring is a primary cause of preventable deaths. Current monitoring systems in the ICU are unable to identify impending cardiac arrests despite post-hoc analysis by cardiologists revealing high-risk signs. Moreover, they suffer from false alarm rates of over 85%, leading to alarm fatigue.</p>
-        <p>CAMEL-ECG is a cross-disciplinary initiative that aims to address this gap by combining advanced AI modeling with high-resolution, real-time, ECG data from patients admitted to the ICU. Our goal is to develop AI-driven models that provide timely, clinically actionable predictions while substantially reducing false alarms.</p>
-      </div>
-    </div>
-    <div class="row align-items-center mb-4">
-      <div class="col-lg-6 col-12 mb-3 mb-lg-0">
-        <div class="ai-question text-center p-3 rounded shadow-sm fw-bold h4">
-          Can artificial intelligence help predict and prevent cardiac arrest before it happens?
-        </div>
-      </div>
-      <div class="col-lg-6 col-12 text-center">
-        <img src="images/ecg-ca-prediction-task.png" alt="ECG Cardiac Arrest Prediction Task" class="img-fluid">
-      </div>
-    </div>
-    <div class="row mb-4">
-      <div class="col-12">
-        <p>The core challenge in developing prognostic models relates to the ability to distinguish between clinically informative ECG patterns and noise over long-horizon data.
-          <b>Our target is less than 1 false alarm per 3 hours per hospitalized patient and to identify impending cardiac arrest minutes to hours prior to the event.</b></p>
-        <p>The potential of successfully deploying such models is very high:</p>
-    
-        <div class="row g-3 mb-4">
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="card h-100">
-              <div class="card-header fw-bold" style="color:#263238;">
-                <span class="me-2 d-inline-flex justify-content-center align-items-center" style="background:#1976d2; width: 2em; height: 2em; border-radius: 50%;"><span style="color:#fff; font-size:1.2em;">&#10003;</span></span>Low marginal cost
-              </div>
-              <div class="card-body">
-                ICU systems already provide continuous multi-lead ECG monitoring.
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 col-12">
-            <div class="card h-100">
-              <div class="card-header fw-bold" style="color:#263238;">
-                <span class="me-2 d-inline-flex justify-content-center align-items-center" style="background:#1976d2; width: 2em; height: 2em; border-radius: 50%;"><span style="color:#fff; font-size:1.2em;">&#10003;</span></span>Rapid alarm response
-              </div>
-              <div class="card-body">
-                ECG is sampled at high frequency, delivering high-resolution signals orders of magnitude finer than vital-sign snapshots.
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-12">
-            <div class="card h-100">
-              <div class="card-header fw-bold" style="color:#263238;">
-                <span class="me-2 d-inline-flex justify-content-center align-items-center" style="background:#1976d2; width: 2em; height: 2em; border-radius: 50%;"><span style="color:#fff; font-size:1.2em;">&#10003;</span></span>Broad generalizability
-              </div>
-              <div class="card-body">
-                ECG captures cardiac signals which are uniform across hospitals and largely treatment-agnostic unlike EHR data.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Existing AI Solutions Section -->
-<section id="existing-ai" class="section">
-  <div class="container">
-    <div class="h3 fw-bold mb-4 text-center">What's Missing in Current AI Solutions?</div>
-    <div class="row mb-4 align-items-center">
-      <div class="col-lg-7 col-md-12 col-12 mb-3 mb-lg-0">
-        <p><span class="fw-bold h5 d-block mb-2 subsection-header"><span class="me-2" style="color: #dc3545; font-size: 1.2em;">⚠️</span>Insufficient Data Quality</span>
-        The quality of data is central to the success of any AI solution. In contrast to domains like code generation or protein folding—where AI has thrived thanks to abundant high-quality data—<b>public ECG datasets typically contain only 10-second or single-lead recordings</b>. These are insufficient to train generative models or to predict cardiac arrest with adequate lead time.</p>
-      </div>
-      <div class="col-lg-5 col-md-12 col-12 text-center">
-        <img src="images/distribution-of-studies.png" alt="Distribution of Studies" class="img-fluid" style="max-width: 100%">
-      </div>
-    </div>
-    <div class="row mb-4 align-items-center">
-      <div class="col-lg-7 col-12 mb-3 mb-lg-0 order-lg-2">
-        <p><span class="fw-bold h5 d-block mb-2 subsection-header"><span class="me-2" style="color: #dc3545; font-size: 1.2em;">⚠️</span>Low Accuracy and Hallucinations</span>
-        When trained on such limited data, AI models fall short of clinical utility.
-        For instance, <a href="https://pubmed.ncbi.nlm.nih.gov/40110219/">a deep learning model published in early 2025</a> reported a specificity of just 31% when sensitivity was fixed at 95%—a false positive rate of 69%.
-        Compounding the issue, prompting state-of-the-art deep learning models like OpenAI's o3 directly on these datasets can lead to hallucinations and unreliable outputs.</p>
-      </div>
-      <div class="col-lg-5 col-12 text-center order-lg-1 mb-3 mb-lg-0">
-        <img src="images/o3-hallucination.png" alt="Hallucination Example" class="img-fluid" style="max-width: 100%">
-      </div>
-    </div>
-    <div class="row mb-4 align-items-center">
-      <div class="col-lg-7 col-12 mb-3 mb-lg-0">
-        <p><span class="fw-bold h5 d-block mb-2 subsection-header"><span class="me-2" style="color: #dc3545; font-size: 1.2em;">⚠️</span>Lack of Clinical Usefulness</span>
-        As a result, many AI systems in this space fail to translate into meaningful clinical applications.
-        The disconnect between technical development and real-world clinical considerations—such as alarm fatigue or workflow integration—prevents these models from being deployed effectively in the ICU.</p>
-      </div>
-      <div class="col-lg-5 col-12 text-center">
-        <img src="images/alarm-fatigue-stats.jpg" alt="Alarm Fatigue Stats" class="img-fluid" style="max-width: 100%">
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Technology Section -->
-<section id="technology" class="section bg-alt">
-  <div class="container">
-    <div class="h3 fw-bold mb-4 text-center">Our Technology</div>
-    <div class="row mb-4">
-      <div class="col-12">
-        <p>Our approach comprises three fundamental pillars: (1) generating the largest high-quality long-horizon ECG dataset; (2) building accurate and explainable predictive AI models; and (3) translational integration and clinical validation.</p>
-      </div>
-    </div>
-    <div class="row mb-4 align-items-center">
-      <div class="col-lg-7 col-md-12 col-12 mb-3 mb-lg-0">
-        <p><span class="fw-bold h5 d-block mb-2 subsection-header"><span class="me-2" style="color: #28a745; font-size: 1.2em;">✓</span>High-Quality Long-Horizon ECG Dataset</span>
-        We will leverage novel, high-resolution, long-horizon ECG data at Penn Medicine, collected from monitoring 10,000 patients. These data, sampled at 250Hz, will provide the crucial fine-grained information that are unavailable in any public dataset.</p>
-      </div>
-      <div class="col-lg-5 col-md-12 col-12 text-center">
-        <img src="images/dataset-comparison.png" alt="Dataset Comparison" class="img-fluid" style="max-width: 100%">
-      </div>
-    </div>
-    <div class="row mb-4 align-items-center">
-      <div class="col-lg-7 col-12 mb-3 mb-lg-0 order-lg-2">
-        <p><span class="fw-bold h5 d-block mb-2 subsection-header"><span class="me-2" style="color: #28a745; font-size: 1.2em;">✓</span>Accurate and Explainable Predictive AI Models</span>
-        We have unique expertise in <b>neurosymbolic AI</b>—an approach that blends deep learning's ability to detect complex physiological patterns with symbolic reasoning that provides guardrails by grounding predictions in clinical reality. Their work is rooted in mathematical rigor, systems engineering, and state-of-the-art methods for reliability and interpretability—making them uniquely equipped to build models that are not only accurate but also deployable in high-stakes settings.</p>
-      </div>
-      <div class="col-lg-5 col-12 text-center order-lg-1 mb-3 mb-lg-0">
-        <img src="images/neurosymbolic-ecg.png" alt="Neurosymbolic ECG" class="img-fluid" style="max-width: 100%">
-      </div>
-    </div>
-    <div class="row mb-4">
-      <div class="col-12">
-        <p><span class="fw-bold h5 d-block mb-2 subsection-header"><span class="me-2" style="color: #28a745; font-size: 1.2em;">✓</span>Translational Integration and Clinical Validation</span>
-        Our clinical colleagues have extensive expertise in developing and validating prognostic models for sudden cardiac death and fatal cardiovascular disease.
-        Consequently, this collaboration is deeply integrated across both domains—from acquiring and interpreting raw telemetry data to designing models that support clinical decision-making.
-        Our designs are modularly integrated into platforms for clinical evaluation.
-        This initiative will include a shared computational platform for generative design and automated experimental facilities for high-throughput analysis, with the ultimate goal of translating our findings directly into improved patient outcomes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Team Section -->
-<section id="team" class="section">
-  <div class="container">
-    <div class="h3 fw-bold mb-4 text-center">The Team</div>
-    <!-- Penn Engineering Section -->
-    <div class="bg-penn-engineering p-4 rounded-4 mb-4">
-      <div class="row">
-        <div class="col-lg-3 col-12 d-flex flex-column align-items-center justify-content-center mb-lg-0 mb-3" style="min-height: 200px;">
-          <img src="images/penn-engineering-logo.png" alt="Penn Engineering Logo" class="img-fluid mb-3" style="max-height: 60px;">
-          <div class="text-center">
-            <div class="text-muted small">Department of Computer and Information Science</div>
-          </div>
-        </div>
-        <div class="col-lg-9 col-12">
-          <!-- Faculty Section -->
-          <div class="mb-4">
-            <h5 class="fw-bold mb-3 subsection-header">Faculty</h5>
-            <!-- Row 1: Rajeev & Mayur -->
-            <div class="row mb-3">
-              <div class="col-md-6 col-12 mb-3 mb-md-0">
-                <div class="d-flex align-items-start">
-                  <img src="images/rajeev_alur.jpg" alt="Rajeev Alur" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://www.cis.upenn.edu/~alur/" target="_blank" rel="noopener">Rajeev Alur</a></h6>
-                    <div class="small text-muted">Zisman Family Professor and Director, ASSET Center for Trustworthy AI</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/mayur_naik.jpg" alt="Mayur Naik" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://www.cis.upenn.edu/~mhnaik/" target="_blank" rel="noopener">Mayur Naik</a></h6>
-                    <div class="small text-muted">Misra Family Professor</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Row 2: Eric -->
-            <div class="row">
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/eric_wong.jpg" alt="Eric Wong" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://riceric22.github.io/" target="_blank" rel="noopener">Eric Wong</a></h6>
-                    <div class="small text-muted">Assistant Professor</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- PhD Students Section -->
-          <div class="mb-4">
-            <h5 class="fw-bold mb-3 subsection-header">PhD Students</h5>
-            <!-- Row 1: Seewon & Mayank -->
-            <div class="row mb-3">
-              <div class="col-md-6 col-12 mb-3 mb-md-0">
-                <div class="d-flex align-items-start">
-                  <img src="images/seewon_choi.jpg" alt="Seewon Choi" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://seewonchoi.github.io/" target="_blank" rel="noopener">Seewon Choi</a></h6>
-                    <div class="small text-muted">PhD Student</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/mayank_keoliya.jpg" alt="Mayank Keoliya" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://www.seas.upenn.edu/~mkeoliya/" target="_blank" rel="noopener">Mayank Keoliya</a></h6>
-                    <div class="small text-muted">PhD Student</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Row 2: Alaia & Neelay -->
-            <div class="row">
-              <div class="col-md-6 col-12 mb-3 mb-md-0">
-                <div class="d-flex align-items-start">
-                  <img src="images/alaia_solko_breslin.png" alt="Alaia Solko-Breslin" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://alaiasolkobreslin.github.io/" target="_blank" rel="noopener">Alaia Solko-Breslin</a></h6>
-                    <div class="small text-muted">PhD Student</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/neelay_velinkger.jpg" alt="Neelay Velingker" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://nvelingker.github.io/" target="_blank" rel="noopener">Neelay Velingker</a></h6>
-                    <div class="small text-muted">PhD Student</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Visiting Researchers Section -->
-          <div>
-            <h5 class="fw-bold mb-3 subsection-header">Visiting Researchers</h5>
-            <!-- Row 1: Anika -->
-            <div class="row">
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/anika-marathe.png" alt="Anika Marathe" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1">Anika Marathe</h6>
-                    <div class="small text-muted">Del Norte High School, San Diego</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Penn Medicine Section -->
-    <div class="bg-penn-medicine p-4 rounded-4">
-      <div class="row">
-        <div class="col-lg-3 col-12 d-flex flex-column align-items-center justify-content-center mb-lg-0 mb-3" style="min-height: 200px;">
-          <img src="images/penn-medicine-logo.png" alt="Penn Medicine Logo" class="img-fluid mb-3" style="max-height: 60px;">
-          <div class="text-center">
-            <div class="text-muted small">Department of Medicine</div>
-          </div>
-        </div>
-        <div class="col-lg-9 col-12">
-          <!-- Faculty Section -->
-          <div class="mb-4">
-            <h5 class="fw-bold mb-3 subsection-header">Faculty</h5>
-            <!-- Row 1: Rajat & Sameed -->
-            <div class="row">
-              <div class="col-md-6 col-12 mb-3 mb-md-0">
-                <div class="d-flex align-items-start">
-                  <img src="images/rajat_deo.jpg" alt="Rajat Deo" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://www.med.upenn.edu/apps/faculty/index.php/g275/p8201040" target="_blank" rel="noopener">Rajat Deo, MD, MTR</a></h6>
-                    <div class="small text-muted">Associate Professor of Cardiovascular Medicine</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/sameed_khatana.jpg" alt="Sameed Khatana" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://www.med.upenn.edu/khatana-lab/" target="_blank" rel="noopener">Sameed Khatana, MD, MPH</a></h6>
-                    <div class="small text-muted">Assistant Professor of Cardiovascular Medicine<br>Associate Director, Penn Cardiovascular Outcomes, Quality, and Evaluative Research (CAVOQER) Center</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Postdoctoral Researchers Section -->
-          <div>
-            <h5 class="fw-bold mb-3 subsection-header">Postdoctoral Researchers</h5>
-            <!-- Row 1: Alireza -->
-            <div class="row">
-              <div class="col-md-6 col-12">
-                <div class="d-flex align-items-start">
-                  <img src="images/alireza_oraii.jpg" alt="Alireza Oraii" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-                  <div>
-                    <h6 class="mb-1"><a href="https://www.med.upenn.edu/apps/faculty/index.php/g275/p9641895" target="_blank" rel="noopener">Alireza Oraii</a></h6>
-                    <div class="small text-muted">Postdoctoral Researcher of Cardiovascular Medicine</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Acknowledgments Section -->
-<section id="acknowledgments" class="section bg-alt">
-  <div class="container">
-    <div class="h3 fw-bold mb-4 text-center">Acknowledgments</div>
-    <div class="mb-4">
-      <div class="d-flex align-items-center mb-3">
-        <div class="me-4 flex-shrink-0" style="width: 150px; min-width: 150px;">
-          <img src="images/arpa-h-logo.png" alt="ARPA-H Logo" style="max-height: 60px; max-width: 100%; height: auto;">
-        </div>
-        <div class="flex-grow-1">
-          <p class="mb-0">This project is supported by the Advanced Research Projects Agency for Health (ARPA-H) under Award Number D24AC00253-00. The content is solely the responsibility of the authors and does not necessarily represent the official views of ARPA-H.</p>
-        </div>
-      </div>
-      <div class="d-flex align-items-center mb-3">
-        <div class="me-4 flex-shrink-0" style="width: 150px; min-width: 150px;">
-          <a href="https://parcc.upenn.edu/" target="_blank" rel="noopener">
-            <img src="images/parcc-logo.png" alt="PARCC Logo" style="max-height: 60px; max-width: 100%; height: auto;">
-          </a>
-        </div>
-        <div class="flex-grow-1">
-          <p class="mb-0">We acknowledge the <a href="https://parcc.upenn.edu/" target="_blank" rel="noopener">Penn Advanced Research Computing Center (PARCC)</a> for providing cutting-edge GPU compute capabilities for training CAMEL-ECG.</p>
-        </div>
-      </div>
-      <div class="d-flex align-items-center">
-        <div class="me-4 flex-shrink-0" style="width: 150px; min-width: 150px;">
-          <img src="images/aws-logo.png" alt="AWS Logo" style="max-height: 60px; max-width: 100%; height: auto;">
-        </div>
-        <div class="flex-grow-1">
-          <p class="mb-0">We acknowledge PhD student support in the form of a gift from AWS AI to ASSET–Penn Engineering Center on Trustworthy AI.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-navbar text-white text-center p-3">
-  <small>&copy; 2026 University of Pennsylvania - CAMEL-ECG Project</small>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="/js/motion.js"></script>
 </body>
 </html>
-

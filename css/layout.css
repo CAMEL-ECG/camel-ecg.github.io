@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Layout — 12-col grid, container, section rhythm, asymmetric utilities.
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--pad-desk);
+}
+
+@media (max-width: 1023px) { .container { padding-inline: var(--pad-tab); } }
+@media (max-width: 639px)  { .container { padding-inline: var(--pad-mob); } }
+
+/* 12-col grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+}
+
+@media (max-width: 1023px) {
+  .grid { grid-template-columns: repeat(8, 1fr); }
+}
+
+@media (max-width: 639px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* Desktop column spans */
+@media (min-width: 1024px) {
+  .col-1-3  { grid-column: 1 / 4; }
+  .col-1-4  { grid-column: 1 / 5; }
+  .col-1-5  { grid-column: 1 / 6; }
+  .col-1-6  { grid-column: 1 / 7; }
+  .col-1-7  { grid-column: 1 / 8; }
+  .col-1-8  { grid-column: 1 / 9; }
+  .col-1-9  { grid-column: 1 / 10; }
+  .col-1-12 { grid-column: 1 / 13; }
+  .col-2-11 { grid-column: 2 / 12; }
+  .col-3-12 { grid-column: 3 / 13; }
+  .col-4-9  { grid-column: 4 / 10; }
+  .col-6-12 { grid-column: 6 / 13; }
+  .col-7-12 { grid-column: 7 / 13; }
+  .col-8-12 { grid-column: 8 / 13; }
+  .col-9-12 { grid-column: 9 / 13; }
+  .col-10-12{ grid-column: 10 / 13; }
+}
+
+/* Tablet spans: translate 12-col into 8-col */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .col-1-3, .col-1-4, .col-1-5  { grid-column: 1 / 4; }
+  .col-1-6, .col-1-7             { grid-column: 1 / 6; }
+  .col-1-8, .col-1-9             { grid-column: 1 / 7; }
+  .col-1-12, .col-2-11, .col-3-12{ grid-column: 1 / -1; }
+  .col-4-9                       { grid-column: 2 / 8; }
+  .col-6-12                      { grid-column: 4 / -1; }
+  .col-7-12                      { grid-column: 5 / -1; }
+  .col-8-12, .col-9-12           { grid-column: 5 / -1; }
+  .col-10-12                     { grid-column: 6 / -1; }
+}
+
+/* Section rhythm */
+.section { padding-block: var(--space-8); }
+.section--hero { padding-block: var(--space-9) var(--space-9); }
+.section--tight { padding-block: var(--space-6); }
+
+@media (max-width: 1023px) {
+  .section { padding-block: 80px; }
+  .section--hero { padding-block: 120px 140px; }
+  .section--tight { padding-block: 56px; }
+}
+
+@media (max-width: 639px) {
+  .section { padding-block: 56px; }
+  .section--hero { padding-block: 72px 80px; }
+  .section--tight { padding-block: 40px; }
+}
+
+/* Tonal surfaces */
+.surface-bone { background: var(--bone); }
+.surface-deep { background: var(--bone-deep); }
+
+/* ECG graph-paper ground (applied selectively) */
+.surface-grid {
+  position: relative;
+  isolation: isolate;
+  background: var(--bone);
+}
+.surface-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right,  color-mix(in srgb, var(--strip) 100%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--strip) 100%, transparent) 1px, transparent 1px),
+    linear-gradient(to right,  color-mix(in srgb, var(--strip) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--strip) 60%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  opacity: 0.35;
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+
+/* A "ruler mark" — tiny arterial hairline used under eyebrows */
+.ruler-mark {
+  display: block;
+  width: 12px;
+  height: 1px;
+  background: var(--arterial);
+  margin-block: var(--space-2);
+}
+
+/* Section heading cluster */
+.heading-cluster > .eyebrow { display: inline-flex; margin-bottom: var(--space-3); }
+.heading-cluster > .section-title { margin-bottom: var(--space-4); }
+.heading-cluster > .lede { margin-bottom: var(--space-5); }
+
+/* Full-bleed helper — escapes the container */
+.bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+
+/* Alternating zigzag rows (used on Technology "Why current AI falls short") */
+.zig {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+  row-gap: var(--space-5);
+}
+@media (min-width: 1024px) {
+  .zig--left  > .zig__head { grid-column: 1 / 5; }
+  .zig--left  > .zig__body { grid-column: 6 / 13; }
+  .zig--right > .zig__head { grid-column: 9 / 13; text-align: end; }
+  .zig--right > .zig__body { grid-column: 1 / 8; }
+}
+@media (max-width: 1023px) {
+  .zig__head, .zig__body { grid-column: 1 / -1; }
+}
+
+/* Stagger utilities (descend-stepwise, e.g. results strip) */
+.stair > * { transform: translateY(0); }
+@media (min-width: 1024px) {
+  .stair > *:nth-child(1) { transform: translateY(0); }
+  .stair > *:nth-child(2) { transform: translateY(8px); }
+  .stair > *:nth-child(3) { transform: translateY(16px); }
+  .stair > *:nth-child(4) { transform: translateY(24px); }
+}
+
+/* Utility spacings */
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-7 { margin-top: var(--space-7); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+.stack-2 > * + * { margin-top: var(--space-2); }
+.stack-3 > * + * { margin-top: var(--space-3); }
+.stack-4 > * + * { margin-top: var(--space-4); }
+.stack-5 > * + * { margin-top: var(--space-5); }
+
+/* Inline cluster */
+.cluster { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-3); }
+
+/* Hairlines */
+.hairline  { border: 0; border-top: 1px solid var(--platinum); margin: 0; }
+.hairline--v { border: 0; border-inline-start: 1px solid var(--platinum); }
+.hairline--arterial { border: 0; border-top: 1px solid var(--arterial); margin: 0; }
+
+/* ECG section-divider sits full-bleed between sections */
+.divider-ecg {
+  display: block;
+  width: 100%;
+  height: 32px;
+  color: var(--ink);
+}
+
+/* Page header (used on non-landing pages) */
+.page-header { padding-block: var(--space-7) var(--space-6); }
+@media (max-width: 1023px) { .page-header { padding-block: 88px var(--space-5); } }
+@media (max-width: 639px)  { .page-header { padding-block: 72px var(--space-5); } }

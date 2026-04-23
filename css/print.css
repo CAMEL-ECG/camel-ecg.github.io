@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Print stylesheet — the Technology page should print like a journal article.
+   ========================================================================== */
+
+@media print {
+  :root {
+    --bone: #ffffff;
+    --bone-deep: #ffffff;
+    --strip: #eeeeee;
+    --platinum: #888888;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  .navbar, .footer, .btn, .btn-primary, .btn-ghost, .btn-cta, .skip-link,
+  .demo-tabs, .live-slot, .forecast-marker, .bibtex__copy, .codecard__copy {
+    display: none !important;
+  }
+
+  .surface-grid::before { display: none !important; }
+
+  .container { max-width: none; padding-inline: 0; }
+
+  .grid { display: block; }
+
+  .section { padding-block: 18pt; break-inside: avoid; }
+
+  h1, h2, h3, h4 { color: #000; page-break-after: avoid; }
+  h1 { font-size: 24pt; }
+  h2 { font-size: 18pt; }
+  h3 { font-size: 14pt; }
+
+  .display { font-size: 26pt; }
+
+  p { max-width: none; color: #000; }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+  a[href^="http"]::after,
+  a[href^="mailto:"]::after {
+    content: " (" attr(href) ")";
+    font-family: var(--ff-mono);
+    font-size: 9pt;
+    color: #555;
+  }
+
+  .hero-visual, .divider-ecg, .ruler-mark { display: none !important; }
+
+  img { max-width: 100% !important; filter: grayscale(1); }
+
+  table, th, td { border: 1px solid #000 !important; color: #000 !important; }
+  .table { border-top: 1.5pt solid #000; border-bottom: 1.5pt solid #000; }
+
+  .bibtex, pre, code { background: #f4f4f4; color: #000 !important; border: 1px solid #bbb; }
+
+  .dept { border: 1px solid #aaa; transform: none !important; margin-top: 12pt; }
+
+  .card, .stat, .stage, .example, .callout, .signup { border: 1px solid #999 !important; background: #fff !important; transform: none !important; box-shadow: none !important; }
+
+  .pillar { page-break-inside: avoid; }
+
+  @page { margin: 18mm; }
+}

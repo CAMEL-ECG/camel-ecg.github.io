@@ -1,0 +1,332 @@
+/* ==========================================================================
+   Typography — @font-face, type scale, prose marks.
+   All three faces are SIL OFL, self-hosted under /assets/fonts/.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("../assets/fonts/fraunces-variable.woff2") format("woff2-variations"),
+       url("../assets/fonts/fraunces-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../assets/fonts/fraunces-variable-italic.woff2") format("woff2-variations"),
+       url("../assets/fonts/fraunces-variable-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/plex-sans-400.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/plex-sans-400-italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/plex-sans-500.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/plex-sans-600.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../assets/fonts/plex-sans-700.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../assets/fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../assets/fonts/plex-mono-500.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+/* -- Family tokens (not in tokens.css so @font-face names resolve first) - */
+:root {
+  --ff-serif: "Fraunces", "Iowan Old Style", "Georgia", ui-serif, serif;
+  --ff-sans:  "IBM Plex Sans", "Helvetica Neue", "Arial", system-ui, sans-serif;
+  --ff-mono:  "IBM Plex Mono", "SFMono-Regular", "Menlo", "Consolas", ui-monospace, monospace;
+}
+
+/* -- Base -------------------------------------------------------------- */
+body {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-body);
+  color: var(--ink);
+  background-color: var(--bone);
+  font-feature-settings: "kern", "liga", "clig", "calt";
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  hanging-punctuation: first last;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--ff-serif);
+  color: var(--ink);
+  line-height: var(--lh-title);
+  font-feature-settings: "kern", "liga", "dlig", "calt", "ss01";
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-h1); font-variation-settings: var(--frx-section); }
+h2 { font-size: var(--fs-h2); font-variation-settings: var(--frx-section); }
+h3 { font-size: var(--fs-h3); font-variation-settings: var(--frx-h3); font-weight: 500; }
+h4 { font-size: var(--fs-h4); font-weight: 500; font-family: var(--ff-sans); }
+
+p {
+  max-width: 64ch;
+  line-height: var(--lh-body);
+}
+
+p + p { margin-top: var(--space-3); }
+
+em, cite, i {
+  font-style: italic;
+  font-variation-settings: var(--frx-body-italic);
+}
+
+strong, b { font-weight: 600; }
+
+/* -- Display / hero --------------------------------------------------- */
+.display {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  font-variation-settings: var(--frx-display);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-inline-start: -0.06em;  /* optical left-hang */
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+
+@media (max-width: 639px) {
+  .display { letter-spacing: -0.01em; }
+}
+
+.display em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "wght" 500;
+}
+
+/* -- Eyebrow (Plex Mono, small caps) --------------------------------- */
+.eyebrow {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  font-feature-settings: "smcp", "c2sc", "lnum", "tnum";
+  font-variant: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--graphite);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: var(--arterial);
+  transform: translateY(-4px);
+}
+
+/* -- Lede ------------------------------------------------------------- */
+.lede {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-variation-settings: var(--frx-body-italic);
+  font-size: var(--fs-lede);
+  line-height: var(--lh-loose);
+  color: var(--ink);
+  max-width: 58ch;
+}
+
+/* -- Section titles -------------------------------------------------- */
+.section-title {
+  font-family: var(--ff-serif);
+  font-size: var(--fs-h1);
+  font-variation-settings: var(--frx-section);
+  line-height: var(--lh-title);
+  color: var(--ink);
+  margin-inline-start: -0.06em;
+  text-wrap: balance;
+}
+
+/* -- Long-form prose ------------------------------------------------- */
+.prose p {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  max-width: 64ch;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+.prose p + p { margin-top: var(--space-3); }
+
+.prose a {
+  border-bottom: 1px solid var(--graphite);
+  transition: border-color var(--dur-instant) var(--ease-instrument),
+              color         var(--dur-instant) var(--ease-instrument);
+}
+.prose a:hover { border-color: var(--arterial); color: var(--arterial); }
+
+/* -- Abbreviations --------------------------------------------------- */
+abbr[title] {
+  text-decoration: underline dotted var(--graphite);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+/* -- Code / mono ----------------------------------------------------- */
+code, pre, kbd, samp, .mono {
+  font-family: var(--ff-mono);
+  font-size: 0.94em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+pre {
+  overflow-x: auto;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bone-deep);
+  border: var(--rule) solid var(--platinum);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* -- Caret, selection ----------------------------------------------- */
+body { caret-color: var(--arterial); }
+
+/* -- Inline superscript reference numerals --------------------------- */
+sup.ref {
+  font-family: var(--ff-mono);
+  font-size: 0.72em;
+  color: var(--arterial);
+  padding-inline-start: 2px;
+  font-feature-settings: "lnum", "tnum";
+}
+sup.ref a,
+sup.ref a:hover,
+sup.ref a:focus-visible {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: none;
+  transition: opacity var(--dur-instant) var(--ease-instrument);
+}
+sup.ref a:hover { opacity: 0.7; }
+sup.ref a:focus-visible {
+  outline: 2px solid var(--arterial);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Footnote anchor targets: give the sticky nav some breathing room */
+.sidenote > p[id^="fn-"] { scroll-margin-top: calc(var(--nav-height, 64px) + var(--space-4, 24px)); }
+
+/* -- Tabular stats (numeric line-up) -------------------------------- */
+.tabular { font-variant-numeric: lining-nums tabular-nums; }
+
+/* -- Text-link utility ----------------------------------------------- */
+.link-plain {
+  color: var(--ink);
+  border-bottom: 1px solid var(--platinum);
+  transition: border-color var(--dur-instant) var(--ease-instrument),
+              color         var(--dur-instant) var(--ease-instrument);
+}
+.link-plain:hover { border-color: var(--arterial); color: var(--arterial); }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--ink);
+  font-weight: 500;
+  border-bottom: 1px solid var(--platinum);
+  transition: border-color var(--dur-instant) var(--ease-instrument),
+              color         var(--dur-instant) var(--ease-instrument);
+}
+.link-arrow::after {
+  content: "↗";
+  font-family: var(--ff-mono);
+  font-size: 0.92em;
+  transform: translate(0, 0);
+  transition: transform var(--dur-quick) var(--ease-instrument);
+}
+.link-arrow:hover { color: var(--arterial); border-color: var(--arterial); }
+.link-arrow:hover::after { transform: translate(2px, -2px); }
+
+/* -- Pull quote / sidenote ------------------------------------------ */
+.pullquote {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-variation-settings: var(--frx-body-italic);
+  font-size: calc(var(--fs-body) * 1.18);
+  line-height: var(--lh-loose);
+  color: var(--ink);
+  border-inline-start: 1px solid var(--arterial);
+  padding-inline-start: var(--space-3);
+}
+
+/* -- Drop cap (used only on Technology lede) ------------------------- */
+.dropcap::first-letter {
+  font-family: var(--ff-serif);
+  font-variation-settings: var(--frx-display);
+  float: left;
+  font-size: 5.1em;
+  line-height: 0.86;
+  padding-inline-end: 10px;
+  padding-block-start: 6px;
+  color: var(--ink);
+  margin-inline-start: -0.04em;
+}
+
+/* -- Figure captions ------------------------------------------------ */
+figure { margin: 0; }
+figcaption {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-caption);
+  font-feature-settings: "smcp", "lnum";
+  font-variant: all-small-caps;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
+  margin-top: var(--space-2);
+}
+figcaption em { font-family: var(--ff-serif); font-variant: normal; letter-spacing: 0; }
+
+/* -- Sidenotes (Technology) ---------------------------------------- */
+.sidenote {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-caption);
+  color: var(--graphite);
+  border-inline-start: 1px solid var(--arterial);
+  padding-inline-start: var(--space-3);
+  line-height: var(--lh-body);
+}
+.sidenote .num {
+  font-family: var(--ff-mono);
+  font-size: 0.84em;
+  color: var(--arterial);
+  vertical-align: super;
+  font-feature-settings: "lnum";
+  margin-inline-end: var(--space-1);
+}

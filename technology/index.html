@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Technology · CAMEL</title>
+  <meta name="description" content="From raw telemetry to grounded forecasts — CAMEL's data, architecture, curriculum, and results.">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+
+  <link rel="preload" href="/assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-400.woff2"    as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plex-sans-500.woff2"    as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/typography.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/motion.css">
+  <link rel="stylesheet" href="/css/print.css" media="print">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="navbar" aria-label="Site">
+  <div class="container navbar__inner">
+    <a class="navbar__brand" href="/" aria-label="CAMEL home">
+      <svg class="mark" viewBox="0 0 56 22" aria-hidden="true">
+        <path class="pulse" d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54"
+          stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="wordmark">CAMEL</span>
+    </a>
+
+    <button class="navbar__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span class="bar" aria-hidden="true"></span>
+    </button>
+
+    <nav class="navbar__links" id="nav-links" aria-label="Primary">
+      <a class="nav-link" href="/">Model</a>
+      <a class="nav-link" href="/technology/" aria-current="page">Technology</a>
+      <a class="nav-link" href="/team/">Team</a>
+      <a class="nav-link" href="/demo/">Demo</a>
+      <span class="navbar__cta"><a class="btn-cta" href="/waitlist/">Join Waitlist</a></span>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== PAGE HEADER ==================== -->
+  <section class="section page-header surface-grid">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-9 heading-cluster">
+          <p class="eyebrow">Technology</p>
+          <span class="ruler-mark" aria-hidden="true"></span>
+          <h1 class="display" style="font-size: clamp(40px, 7vw, 88px);">From raw telemetry to <em>grounded</em> forecasts.</h1>
+          <p class="lede" style="max-width: 58ch;">CAMEL's research bet: that ECG is a language-like substrate. Given enough long-horizon data, the right tokenization, and a curriculum that teaches a language model to <em>cite its statistics</em>, it becomes a forecaster, not just a classifier.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CLINICAL GAP ==================== -->
+  <section class="section" aria-labelledby="gap-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-8 reveal">
+          <p class="eyebrow">The clinical gap</p>
+          <h2 id="gap-title" class="section-title mt-3 mb-4"><span class="wipe">A family of emergencies,</span> <em>managed</em> <span class="wipe">only after they strike.</span></h2>
+
+          <div class="prose stack-4">
+            <p class="dropcap">Heart-rhythm disorders and the arrhythmogenic conditions that trigger them span the full arc of clinical acuity. In the United States alone, sudden cardiac arrest, driven primarily by ventricular fibrillation and ventricular tachycardia, accounts for roughly <strong>350,000 out-of-hospital</strong> and <strong>292,000 in-hospital</strong> events each year, with survival rates remaining poor.<sup class="ref"><a class="footnote-ref" href="#fn-1">1</a></sup> Atrial fibrillation and atrial flutter, an order of magnitude more common, affect <strong>more than 52&nbsp;million</strong> people worldwide and drive a disproportionate share of ischemic stroke.<sup class="ref"><a class="footnote-ref" href="#fn-2">2</a></sup> Obstructive sleep apnea, an arrhythmogenic risk factor rather than an arrhythmia itself, reaches <strong>nearly one&nbsp;billion adults globally</strong>.<sup class="ref"><a class="footnote-ref" href="#fn-3">3</a></sup></p>
+
+            <p>Despite this range in severity, these conditions share a clinical limitation: they are managed <em>reactively</em>, identified only after pathological markers have already manifested. For the most acute events, that delay is decisive: each minute without defibrillation lowers survival by <strong>7&ndash;10%</strong>, and resuscitation becomes exceedingly unlikely past the ten-minute mark.<sup class="ref"><a class="footnote-ref" href="#fn-4">4</a></sup> For non-arrest arrhythmias and apneic episodes, the lost window is measured in hours of avoidable risk rather than seconds of mortality; the mechanism differs, but the shape of the failure does not.</p>
+
+            <p>The clinical value of prediction is therefore large and broadly distributed. Forecasting atrial fibrillation before it begins enables earlier rate control, such as timely beta-blockade instead of post-hoc cardioversion.<sup class="ref"><a class="footnote-ref" href="#fn-5">5</a></sup> Forecasting an apneic episode enables airway intervention before hypoxia cascades into arrhythmia. For acute arrest, every minute of lead time folds back into survival. CAMEL's target is to deliver that lead time, at a false-alarm rate the bedside can actually live with.</p>
+          </div>
+        </div>
+
+        <aside class="col-10-12 sidenote reveal" style="align-self: end;">
+          <p id="fn-1"><span class="num">1</span> AHA, <a class="link-plain" href="https://doi.org/10.1161/CIR.0000000000001412">2026 Heart Disease and Stroke Statistics</a>, <em>Circulation</em>, 2026; Holmberg et&nbsp;al., <a class="link-plain" href="https://doi.org/10.1161/CIRCOUTCOMES.119.005580">Annual incidence of adult and pediatric IHCA in the U.S.</a>, <em>Circ. Cardiovasc. Qual. Outcomes</em>, 2019.</p>
+          <p id="fn-2" style="margin-top: var(--space-3);"><span class="num">2</span> Karatela &amp; Calkins, <a class="link-plain" href="https://doi.org/10.15420/aer.2025.33">The global impact of atrial fibrillation</a>, <em>Arrhythm. Electrophysiol. Rev.</em>, 2025; Migdady et&nbsp;al., <a class="link-plain" href="https://doi.org/10.1055/s-0041-1726332">Atrial fibrillation and ischemic stroke</a>, <em>Semin. Neurol.</em>, 2021.</p>
+          <p id="fn-3" style="margin-top: var(--space-3);"><span class="num">3</span> Benjafield et&nbsp;al., <a class="link-plain" href="https://doi.org/10.1016/S2213-2600(19)30198-5">Global prevalence and burden of obstructive sleep apnoea</a>, <em>Lancet Respir. Med.</em>, 2019; Yeghiazarians et&nbsp;al., <a class="link-plain" href="https://doi.org/10.1161/CIR.0000000000000988">OSA and cardiovascular disease</a>, AHA scientific statement, <em>Circulation</em>, 2021.</p>
+          <p id="fn-4" style="margin-top: var(--space-3);"><span class="num">4</span> Valenzuela et&nbsp;al., <a class="link-plain" href="https://doi.org/10.1161/01.CIR.96.10.3308">Estimating effectiveness of cardiac arrest interventions</a>, <em>Circulation</em>, 1997.</p>
+          <p id="fn-5" style="margin-top: var(--space-3);"><span class="num">5</span> Joglar et&nbsp;al., <a class="link-plain" href="https://doi.org/10.1161/CIR.0000000000001193">2023 ACC/AHA/ACCP/HRS guideline for the diagnosis and management of atrial fibrillation</a>, <em>Circulation</em>, 2024.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="reveal">
+    <svg class="divider-ecg" viewBox="0 0 1440 32" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 16 H360 L372 16 L378 8 L384 22 L390 6 L396 24 L402 10 L408 16 H720 L732 16 L738 4 L744 24 L750 8 L756 20 L762 16 H1080 L1092 16 L1098 8 L1104 22 L1110 6 L1116 24 L1122 10 L1128 16 H1440"
+        stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div></div>
+
+  <!-- ==================== WHY CURRENT AI FALLS SHORT ==================== -->
+  <section class="section" aria-labelledby="short-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-7 heading-cluster reveal">
+          <p class="eyebrow">Why current AI falls short</p>
+          <h2 id="short-title" class="section-title">Three gaps the field has quietly accepted.</h2>
+        </div>
+      </div>
+
+      <div class="zig zig--left reveal" style="margin-top: var(--space-6);">
+        <div class="zig__head">
+          <p class="eyebrow">01 · Data</p>
+          <h3 class="mt-2">Insufficient data.</h3>
+        </div>
+        <div class="zig__body prose">
+          <p>Public ECG datasets are overwhelmingly <strong>10-second, single-lead recordings</strong>, short enough to classify a rhythm but far too short to <em>predict</em> one. Training a forecasting model on ten-second windows is like training a language model on ten-token snippets.</p>
+        </div>
+      </div>
+
+      <div class="zig zig--right reveal" style="margin-top: var(--space-6);">
+        <div class="zig__head">
+          <p class="eyebrow">02 · Accuracy</p>
+          <h3 class="mt-2">Brittle models, and hallucinations.</h3>
+        </div>
+        <div class="zig__body prose">
+          <p>Supervised baselines posted <a href="https://pubmed.ncbi.nlm.nih.gov/40110219/">a 31% specificity at 95% sensitivity</a> in early 2025 — a 69% false-positive rate. Meanwhile, prompting general-purpose LLMs directly on raw ECG reliably produces plausible-sounding but unfounded readings: the worst of both worlds.</p>
+        </div>
+      </div>
+
+      <div class="zig zig--left reveal" style="margin-top: var(--space-6);">
+        <div class="zig__head">
+          <p class="eyebrow">03 · Clinical fit</p>
+          <h3 class="mt-2">Designed around models, not workflows.</h3>
+        </div>
+        <div class="zig__body prose">
+          <p>A model that earns a 0.92 AUROC on a research split but triggers once an hour in the ICU is not clinically deployable. Alarm fatigue, lead variability, and charting integration are first-class constraints — not after-the-fact wrapper concerns.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="reveal">
+    <svg class="divider-ecg" viewBox="0 0 1440 32" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 16 H360 L372 16 L378 8 L384 22 L390 6 L396 24 L402 10 L408 16 H720 L732 16 L738 4 L744 24 L750 8 L756 20 L762 16 H1080 L1092 16 L1098 8 L1104 22 L1110 6 L1116 24 L1122 10 L1128 16 H1440"
+        stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div></div>
+
+  <!-- ==================== OUR APPROACH (PILLARS) ==================== -->
+  <section class="section" aria-labelledby="approach-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-7 heading-cluster reveal">
+          <p class="eyebrow">Our approach</p>
+          <h2 id="approach-title" class="section-title">Three pillars, each earned by the paper.</h2>
+        </div>
+      </div>
+
+      <div class="col-1-12 reveal-stagger" style="margin-top: var(--space-6);">
+        <div class="pillar">
+          <div class="pillar__num" aria-hidden="true">01</div>
+          <div>
+            <h3 class="pillar__title">High-quality, long-horizon data</h3>
+            <p class="pillar__body">More than <strong>1&nbsp;billion</strong> 1-second segments across <strong>13&nbsp;public datasets</strong>, paired with a private 8-lead Penn ICU corpus spanning 10&nbsp;minutes to 48&nbsp;hours per patient and labeled for NORM, VT, and VF. This is not another 10-second benchmark.</p>
+          </div>
+          <aside class="pillar__aside">Private corpus · 8-lead ICU · 10m–48h</aside>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar__num" aria-hidden="true">02</div>
+          <div>
+            <h3 class="pillar__title">Neurosymbolic, evidence-grounded reasoning</h3>
+            <p class="pillar__body">ECGDeli-computed statistics — RR intervals, PR, QRS duration, RMSSD, PAC counts — anchor every forecast. CAMEL's outputs cite specific beat-level metrics, making verification possible and hallucinations harder.</p>
+          </div>
+          <aside class="pillar__aside">Grounding RMSE · 109 vs 304</aside>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar__num" aria-hidden="true">03</div>
+          <div>
+            <h3 class="pillar__title">Staged curriculum training</h3>
+            <p class="pillar__body">Five progressive stages — autoencoder, MC &amp; short answer, statistics, multi-turn, forecasting — that teach the model to read a signal before it is asked to reason over one. Each stage has a measurable contribution in ablation.</p>
+          </div>
+          <aside class="pillar__aside">5 stages · 1B → 17K samples</aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ARCHITECTURE ==================== -->
+  <section id="architecture" class="section surface-grid" aria-labelledby="arch-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-6 heading-cluster reveal">
+          <p class="eyebrow">Architecture</p>
+          <h2 id="arch-title" class="section-title"><em>How</em> CAMEL reads a signal.</h2>
+          <p class="lede">A trainable encoder quantizes the ECG; a lead-aware attention mask lets the model reason across leads at the same timestamp, while remaining causal for the text it generates.</p>
+        </div>
+
+        <div class="col-7-12 reveal">
+          <figure class="example" style="padding: var(--space-5);">
+            <!-- Schematic diagram -->
+            <svg viewBox="0 0 640 300" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto;" aria-labelledby="arch-figtitle">
+              <title id="arch-figtitle">CAMEL architecture diagram</title>
+              <!-- ECG input -->
+              <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#52514D">
+                <text x="20" y="22">INPUT · 1 s ECG</text>
+                <rect x="20" y="32" width="160" height="48" fill="none" stroke="#D6CEC3"/>
+                <path d="M28 56 H50 L56 46 L62 66 L68 56 H90 L96 40 L102 72 L108 56 H160 L168 50 L172 62 L176 56" fill="none" stroke="#12110F" stroke-width="1.2"/>
+
+                <!-- Arrow -->
+                <path d="M185 56 H215" stroke="#52514D" stroke-width="1" marker-end="url(#arr)"/>
+
+                <!-- CNN encoder -->
+                <rect x="220" y="36" width="120" height="40" fill="#EDD8D0" stroke="#8C1F2D" stroke-width="1"/>
+                <text x="280" y="60" text-anchor="middle" font-size="11" fill="#12110F" font-weight="500">CNN encoder</text>
+                <text x="280" y="74" text-anchor="middle" font-size="9">64-d latent</text>
+
+                <path d="M346 56 H380" stroke="#52514D" marker-end="url(#arr)"/>
+
+                <!-- Projection + special tokens -->
+                <rect x="385" y="20" width="235" height="72" fill="none" stroke="#D6CEC3"/>
+                <text x="392" y="34">PROJECT · interleave · &lt;lead_start&gt;…&lt;lead_end&gt;</text>
+                <rect x="395" y="44" width="30" height="18" fill="#F5EFE6" stroke="#12110F"/><text x="410" y="57" text-anchor="middle" font-size="9">sig</text>
+                <rect x="430" y="44" width="30" height="18" fill="#F5EFE6" stroke="#12110F"/><text x="445" y="57" text-anchor="middle" font-size="9">sig</text>
+                <rect x="465" y="44" width="30" height="18" fill="#EDD8D0" stroke="#8C1F2D"/><text x="480" y="57" text-anchor="middle" font-size="9">&lt;ecg&gt;</text>
+                <rect x="500" y="44" width="30" height="18" fill="#F5EFE6" stroke="#12110F"/><text x="515" y="57" text-anchor="middle" font-size="9">txt</text>
+                <rect x="535" y="44" width="30" height="18" fill="#F5EFE6" stroke="#12110F"/><text x="550" y="57" text-anchor="middle" font-size="9">txt</text>
+                <rect x="570" y="44" width="30" height="18" fill="#F5EFE6" stroke="#12110F"/><text x="585" y="57" text-anchor="middle" font-size="9">txt</text>
+                <text x="395" y="82">projected into 2560-d LM space</text>
+
+                <!-- MedGemma + LoRA -->
+                <rect x="80" y="140" width="480" height="70" fill="none" stroke="#12110F" stroke-width="1.2"/>
+                <text x="320" y="160" text-anchor="middle" font-size="12" font-family="Fraunces, serif" font-weight="500" fill="#12110F">MedGemma-4B · lead-aware attention · LoRA r=128</text>
+                <text x="320" y="180" text-anchor="middle" font-size="10">bidirectional across leads at the same timestamp · causal for text</text>
+
+                <path d="M320 100 V134" stroke="#52514D" stroke-dasharray="3 3"/>
+                <path d="M320 212 V242" stroke="#52514D" marker-end="url(#arr)"/>
+
+                <!-- Output -->
+                <rect x="200" y="246" width="240" height="36" fill="#EDD8D0" stroke="#8C1F2D"/>
+                <text x="320" y="270" text-anchor="middle" font-size="11" fill="#12110F" font-weight="500">Forecast · report · citations</text>
+              </g>
+
+              <defs>
+                <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="#52514D"/>
+                </marker>
+              </defs>
+            </svg>
+            <figcaption><em>Fig. 2</em> — CAMEL's encoder + LLM composition, schematic.</figcaption>
+          </figure>
+
+          <div class="callout mt-4">
+            <span class="eyebrow">Why this matters</span>
+            <p>Lead-aware attention enables <strong>variable lead counts</strong>, <strong>variable duration</strong>, and <strong>multi-ECG prompts</strong> — the three shapes a real ICU signal takes but prior encoders rejected.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CURRICULUM ==================== -->
+  <section class="section" aria-labelledby="cur-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-7 heading-cluster reveal">
+          <p class="eyebrow">Curriculum</p>
+          <h2 id="cur-title" class="section-title">Five stages, strictly in order.</h2>
+          <p class="lede">Each stage has a distinct dataset, objective, and output model. We skip none and we do not parallelize.</p>
+        </div>
+      </div>
+
+      <div class="curriculum reveal" style="margin-top: var(--space-6);">
+        <div class="curriculum__rule" aria-hidden="true"></div>
+        <div class="curriculum__grid">
+          <article class="stage above">
+            <div class="stage__num">01 · Autoencoder</div>
+            <h3 class="stage__title">Learn the signal.</h3>
+            <p class="stage__body">1 B+ segments · MSE reconstruction.</p>
+          </article>
+          <article class="stage below">
+            <div class="stage__num">02 · MC &amp; short answer</div>
+            <h3 class="stage__title">Answer clinical Qs.</h3>
+            <p class="stage__body">20 M Harvard-Emory samples.</p>
+          </article>
+          <article class="stage above">
+            <div class="stage__num">03 · Statistics</div>
+            <h3 class="stage__title">Cite the numbers.</h3>
+            <p class="stage__body">~30 M ECGDeli-grounded QA.</p>
+          </article>
+          <article class="stage below">
+            <div class="stage__num">04 · Conversation</div>
+            <h3 class="stage__title">Multi-turn reasoning.</h3>
+            <p class="stage__body">~420 K dialogues · <em>CAMEL-Base</em>.</p>
+          </article>
+          <article class="stage above">
+            <div class="stage__num">05 · Forecasting</div>
+            <h3 class="stage__title">Predict ahead.</h3>
+            <p class="stage__body">17 K Icentia11k rubric samples · <em>CAMEL-Forecast</em>.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RESULTS (interactive slider) ==================== -->
+  <section class="section surface-deep" aria-labelledby="res-title" data-forecast-slider>
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-4 heading-cluster reveal">
+          <p class="eyebrow">Forecasting results</p>
+          <h2 id="res-title" class="section-title">CAMEL widens the gap <em>at every future.</em></h2>
+          <p class="lede">Macro-F1 on forecasting <em>AFib / AFlutter / Sinus rhythm</em>, by input length <span class="mono-inline">w</span> and horizon <span class="mono-inline">h</span>.<br>PULSE and GEM only accept 10-second inputs.</p>
+        </div>
+
+        <div class="col-6-12 reveal forecast-board">
+          <!-- scrubber -->
+          <div class="forecast-scrubber" role="tablist" aria-label="Forecast horizon">
+            <div class="forecast-scrubber__rail" aria-hidden="true"></div>
+            <button class="forecast-stop is-active" type="button" role="tab" aria-selected="true" id="fc-tab-60" aria-controls="fc-panel" data-horizon="60" tabindex="0">
+              <span class="forecast-stop__dot" aria-hidden="true"></span>
+              <span class="forecast-stop__time">1 min</span>
+            </button>
+            <button class="forecast-stop" type="button" role="tab" aria-selected="false" id="fc-tab-180" aria-controls="fc-panel" data-horizon="180" tabindex="-1">
+              <span class="forecast-stop__dot" aria-hidden="true"></span>
+              <span class="forecast-stop__time">3 min</span>
+            </button>
+            <button class="forecast-stop" type="button" role="tab" aria-selected="false" id="fc-tab-300" aria-controls="fc-panel" data-horizon="300" tabindex="-1">
+              <span class="forecast-stop__dot" aria-hidden="true"></span>
+              <span class="forecast-stop__time">5 min</span>
+            </button>
+            <button class="forecast-stop" type="button" role="tab" aria-selected="false" id="fc-tab-600" aria-controls="fc-panel" data-horizon="600" tabindex="-1">
+              <span class="forecast-stop__dot" aria-hidden="true"></span>
+              <span class="forecast-stop__time">10 min</span>
+            </button>
+          </div>
+          <p class="forecast-scrubber__caption">How far ahead CAMEL is asked to forecast</p>
+
+          <!-- panel -->
+          <div class="forecast-panel" role="tabpanel" id="fc-panel" aria-labelledby="fc-tab-60">
+            <div class="forecast-panel__header">
+              <h3 class="forecast-panel__title"><em>h</em>&nbsp;=&nbsp;<span data-fc-h>60&thinsp;s</span> <span class="forecast-panel__title-sep" aria-hidden="true">&middot;</span> <span data-fc-time>one minute ahead</span></h3>
+              <div class="forecast-legend" aria-hidden="true">
+                <span class="forecast-legend__item"><span class="forecast-legend__swatch forecast-legend__swatch--hero"></span>CAMEL&nbsp;Probe</span>
+                <span class="forecast-legend__item"><span class="forecast-legend__swatch forecast-legend__swatch--hero-hollow"></span>CAMEL</span>
+                <span class="forecast-legend__item"><span class="forecast-legend__swatch forecast-legend__swatch--baseline"></span>Baselines</span>
+              </div>
+            </div>
+            <svg class="forecast-chart" viewBox="0 0 800 360" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="fc-chart-title fc-chart-desc">
+              <title id="fc-chart-title">Macro-F1 vs input window across methods</title>
+              <desc id="fc-chart-desc">Line chart comparing CAMEL and baselines.</desc>
+            </svg>
+
+            <p class="forecast-takeaway" data-fc-takeaway></p>
+          </div>
+
+          <p class="figcap forecast-footer"><a class="link-arrow" href="https://arxiv.org/abs/2602.15677">See the full tables in the paper</a></p>
+        </div>
+      </div>
+
+      <!-- No-JS fallback: the four static tables -->
+      <noscript>
+      <div class="grid results-grid" style="margin-top: var(--space-6);">
+
+        <!-- h = 60 s -->
+        <div class="col-1-6 result-panel reveal">
+          <p class="figcap"><em>h&thinsp;=&thinsp;60&thinsp;s</em> &middot; one-minute ahead</p>
+          <div class="table-scroll">
+          <table class="table table--results">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th class="num">w10</th><th class="num">w30</th><th class="num">w60</th><th class="num">w120</th><th class="num">w300</th><th class="num">w600</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><th colspan="7">Zero-shot</th></tr>
+              <tr><td>PULSE</td>       <td class="num">43.21</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GEM</td>         <td class="num">32.54</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GPT-5.2</td>     <td class="num">43.26</td><td class="num">47.54</td><td class="num">48.00</td><td class="num">48.24</td><td class="num">54.36</td><td class="num">51.28</td></tr>
+              <tr class="row-camel"><td>CAMEL</td><td class="num">63.28</td><td class="num">68.88</td><td class="num">69.23</td><td class="num">71.37</td><td class="num best">73.42</td><td class="num">73.18</td></tr>
+              <tr class="row-group"><th colspan="7">Supervised</th></tr>
+              <tr><td>XGBoost</td>     <td class="num">59.55</td><td class="num">55.58</td><td class="num">56.89</td><td class="num">56.09</td><td class="num">59.64</td><td class="num">55.20</td></tr>
+              <tr><td>CNN</td>         <td class="num">46.89</td><td class="num">54.62</td><td class="num">53.59</td><td class="num">50.79</td><td class="num">52.35</td><td class="num">53.10</td></tr>
+              <tr class="row-group"><th colspan="7">Linear probe</th></tr>
+              <tr class="row-camel"><td>CAMEL Probe</td><td class="num best">69.83</td><td class="num best">72.52</td><td class="num best">69.43</td><td class="num best">74.30</td><td class="num">72.56</td><td class="num best">75.14</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <!-- h = 180 s -->
+        <div class="col-7-12 result-panel reveal">
+          <p class="figcap"><em>h&thinsp;=&thinsp;180&thinsp;s</em> &middot; three minutes ahead</p>
+          <div class="table-scroll">
+          <table class="table table--results">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th class="num">w10</th><th class="num">w30</th><th class="num">w60</th><th class="num">w120</th><th class="num">w300</th><th class="num">w600</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><th colspan="7">Zero-shot</th></tr>
+              <tr><td>PULSE</td>       <td class="num">40.50</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GEM</td>         <td class="num">32.95</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GPT-5.2</td>     <td class="num">37.67</td><td class="num">46.71</td><td class="num">51.22</td><td class="num">54.43</td><td class="num">49.29</td><td class="num">52.01</td></tr>
+              <tr class="row-camel"><td>CAMEL</td><td class="num">60.04</td><td class="num">61.27</td><td class="num">65.44</td><td class="num">69.59</td><td class="num">71.34</td><td class="num">67.53</td></tr>
+              <tr class="row-group"><th colspan="7">Supervised</th></tr>
+              <tr><td>XGBoost</td>     <td class="num">56.85</td><td class="num">56.60</td><td class="num">58.18</td><td class="num">57.09</td><td class="num">58.07</td><td class="num">56.17</td></tr>
+              <tr><td>CNN</td>         <td class="num">49.59</td><td class="num">54.72</td><td class="num">57.08</td><td class="num">54.40</td><td class="num">52.76</td><td class="num">50.21</td></tr>
+              <tr class="row-group"><th colspan="7">Linear probe</th></tr>
+              <tr class="row-camel"><td>CAMEL Probe</td><td class="num best">69.81</td><td class="num best">67.38</td><td class="num best">69.91</td><td class="num best">69.85</td><td class="num best">75.46</td><td class="num best">74.64</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <!-- h = 300 s -->
+        <div class="col-1-6 result-panel reveal">
+          <p class="figcap"><em>h&thinsp;=&thinsp;300&thinsp;s</em> &middot; five minutes ahead</p>
+          <div class="table-scroll">
+          <table class="table table--results">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th class="num">w10</th><th class="num">w30</th><th class="num">w60</th><th class="num">w120</th><th class="num">w300</th><th class="num">w600</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><th colspan="7">Zero-shot</th></tr>
+              <tr><td>PULSE</td>       <td class="num">36.67</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GEM</td>         <td class="num">33.33</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GPT-5.2</td>     <td class="num">43.14</td><td class="num">53.42</td><td class="num">52.07</td><td class="num">51.19</td><td class="num">58.16</td><td class="num">56.37</td></tr>
+              <tr class="row-camel"><td>CAMEL</td><td class="num">58.07</td><td class="num">63.58</td><td class="num best">70.15</td><td class="num">67.15</td><td class="num">70.73</td><td class="num">70.48</td></tr>
+              <tr class="row-group"><th colspan="7">Supervised</th></tr>
+              <tr><td>XGBoost</td>     <td class="num">54.08</td><td class="num">54.97</td><td class="num">54.35</td><td class="num">57.05</td><td class="num">56.86</td><td class="num">53.37</td></tr>
+              <tr><td>CNN</td>         <td class="num">48.47</td><td class="num">53.13</td><td class="num">46.54</td><td class="num">46.32</td><td class="num">57.72</td><td class="num">48.99</td></tr>
+              <tr class="row-group"><th colspan="7">Linear probe</th></tr>
+              <tr class="row-camel"><td>CAMEL Probe</td><td class="num best">68.54</td><td class="num best">71.05</td><td class="num">69.31</td><td class="num best">70.30</td><td class="num best">73.36</td><td class="num best">72.70</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <!-- h = 600 s -->
+        <div class="col-7-12 result-panel reveal">
+          <p class="figcap"><em>h&thinsp;=&thinsp;600&thinsp;s</em> &middot; ten minutes ahead</p>
+          <div class="table-scroll">
+          <table class="table table--results">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th class="num">w10</th><th class="num">w30</th><th class="num">w60</th><th class="num">w120</th><th class="num">w300</th><th class="num">w600</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-group"><th colspan="7">Zero-shot</th></tr>
+              <tr><td>PULSE</td>       <td class="num">40.12</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GEM</td>         <td class="num">31.49</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td>GPT-5.2</td>     <td class="num">46.11</td><td class="num">56.04</td><td class="num">47.55</td><td class="num">55.80</td><td class="num">50.01</td><td class="num">55.41</td></tr>
+              <tr class="row-camel"><td>CAMEL</td><td class="num">58.54</td><td class="num">63.91</td><td class="num">64.28</td><td class="num">65.99</td><td class="num">71.37</td><td class="num">66.90</td></tr>
+              <tr class="row-group"><th colspan="7">Supervised</th></tr>
+              <tr><td>XGBoost</td>     <td class="num">57.93</td><td class="num">57.12</td><td class="num">53.84</td><td class="num">55.06</td><td class="num">56.03</td><td class="num">57.07</td></tr>
+              <tr><td>CNN</td>         <td class="num">48.85</td><td class="num">51.96</td><td class="num">53.69</td><td class="num">51.32</td><td class="num">49.90</td><td class="num">56.19</td></tr>
+              <tr class="row-group"><th colspan="7">Linear probe</th></tr>
+              <tr class="row-camel"><td>CAMEL Probe</td><td class="num best">69.30</td><td class="num best">69.53</td><td class="num best">68.49</td><td class="num best">72.04</td><td class="num best">73.54</td><td class="num best">76.02</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="grid" style="margin-top: var(--space-5);">
+        <div class="col-1-12">
+          <p class="figcap"><em>Key</em> &middot; <span class="mono-inline">wN</span> = N-second input window; <span class="mono-inline">h</span> = forecast horizon; bold = best in column per horizon.</p>
+        </div>
+      </div>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- ==================== PAPER & CITATION ==================== -->
+  <section class="section" aria-labelledby="paper-title">
+    <div class="container">
+      <div class="grid">
+        <div class="col-1-7 reveal">
+          <p class="eyebrow">Paper</p>
+          <h2 id="paper-title" class="section-title mt-3"><em>CAMEL:</em> an ECG language model for forecasting and grounded reasoning.</h2>
+
+          <p class="prose" style="margin-top: var(--space-4);">Neelay Velingker, Alaia Solko-Breslin, Mayank Keoliya, Seewon Choi, Jiayi Xin, Anika Marathe, Alireza Oraii, Rajat Deo, Sameed Khatana, Rajeev Alur, Mayur Naik, Eric Wong. <em>arXiv:2602.15677</em>, 2026.</p>
+
+          <div class="actions mt-5" style="display:flex; gap: var(--space-3); flex-wrap:wrap;">
+            <a class="btn btn-primary" href="https://arxiv.org/abs/2602.15677">Read on arXiv</a>
+            <a class="btn btn-ghost"   href="https://github.com/CAMEL-ECG/CAMEL-inference">View on GitHub</a>
+            <a class="btn btn-ghost"   href="https://huggingface.co/CAMEL-ECG">Model on Hugging Face</a>
+          </div>
+        </div>
+
+        <div class="col-8-12 reveal">
+          <div class="bibtex">
+            <button class="bibtex__copy" type="button" data-copy-target="#bibtex">Copy BibTeX</button>
+<pre id="bibtex">@article{camel2026,
+  title   = {CAMEL: An ECG Language Model for Forecasting and Grounded Reasoning},
+  author  = {Velingker, Neelay and Solko-Breslin, Alaia and Keoliya, Mayank
+             and Choi, Seewon and Xin, Jiayi and Marathe, Anika and
+             Oraii, Alireza and Deo, Rajat and Khatana, Sameed and
+             Alur, Rajeev and Naik, Mayur and Wong, Eric},
+  journal = {arXiv preprint arXiv:2602.15677},
+  year    = {2026}
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <hr class="hairline" style="margin-top: var(--space-7); margin-bottom: var(--space-4);">
+
+      <p class="eyebrow" style="margin-bottom: var(--space-2);">Acknowledgments</p>
+      <p class="prose" style="max-width: 96ch;">
+        Supported by ARPA-H (D24AC00253-00), NIH R01-EB036016, the Google TPU Builders Program, a gift from AWS AI to the ASSET Center for Trustworthy AI, and compute from PARCC.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <div class="footer__wordmark">
+          <svg class="mark" viewBox="0 0 56 22" aria-hidden="true" style="width:28px; height:22px;">
+            <path d="M2 11 H14 L17 11 L19 5 L22 17 L25 3 L28 19 L31 7 L34 11 H54" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          CAMEL
+        </div>
+        <p class="footer__tag">An ECG language model that forecasts cardiac events before they happen.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Site</h5>
+        <ul>
+          <li><a href="/">Model</a></li>
+          <li><a href="/technology/">Technology</a></li>
+          <li><a href="/team/">Team</a></li>
+          <li><a href="/demo/">Demo</a></li>
+          <li><a href="/waitlist/">Waitlist</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="https://arxiv.org/abs/2602.15677">Paper · arXiv</a></li>
+          <li><a href="https://github.com/CAMEL-ECG/CAMEL-inference">GitHub · CAMEL-inference</a></li>
+          <li><a href="https://huggingface.co/CAMEL-ECG">Hugging Face · CAMEL-ECG</a></li>
+          <li><a href="/Generative%20AI%20for%20Cardiac%20Arrest%20Prediction.pdf">Project brief · PDF</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h5>Supported by</h5>
+        <ul>
+          <li>ARPA-H · D24AC00253-00</li>
+          <li>NIH · R01-EB036016</li>
+          <li>Google TPU Builders Program</li>
+          <li>AWS AI · ASSET</li>
+          <li>PARCC · Penn Advanced Research Computing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 University of Pennsylvania</span>
+      <span>Penn Engineering × Penn Medicine</span>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/js/motion.js"></script>
+<script defer src="/js/forecast-slider.js"></script>
+</body>
+</html>
